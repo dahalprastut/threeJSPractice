@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 
 const canvas = document.querySelector("canvas.webgl");
 // // we need 4 things to create something:
@@ -62,8 +63,8 @@ cube1.position.x = -2;
 group.add(cube1);
 
 const cube2 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "blue" }));
-cube2.position.x = 2;
-cube2.position.y = 2;
+// cube2.position.x = 2;
+// cube2.position.y = 2;
 // cube2.rotation.reorder("YXZ");
 // cube2.rotation.x = 1;
 
@@ -77,10 +78,10 @@ const sizes = {
 };
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 5;
-camera.position.x = 2;
-camera.position.y = 2;
+// camera.position.x = 2;
+// camera.position.y = 2;
 // camera.lookAt(new THREE.Vector3(0, 0, 0));
-camera.lookAt(cube2.position);
+// camera.lookAt(cube2.position);
 
 scene.add(camera);
 
@@ -89,3 +90,42 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
+
+// let time = Date.now();
+
+// const tick = () => {
+// 	console.log("tick");
+// 	const currentTime = Date.now();
+// 	const deltaTime = currentTime - time;
+// 	time = currentTime;
+// 	cube2.position.x += 0.001 * deltaTime;
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+const clock = new THREE.Clock();
+
+// camera.position.y = 4;
+// camera.lookAt(new THREE.Vector3(0, 2, 0));
+gsap.to(cube2.position, {
+	duration: 2,
+	delay: 1,
+	x: 3,
+});
+gsap.to(cube2.position, {
+	duration: 2,
+	delay: 2,
+	x: 0,
+});
+
+const tick = () => {
+	// const elapsedTime = clock.getElapsedTime();
+	// console.log("ela", elapsedTime);
+	// cube2.position.y = Math.sin(elapsedTime);
+	// cube2.position.x = Math.cos(elapsedTime);
+	// camera.position.x = Math.cos(elapsedTime);
+	renderer.render(scene, camera);
+	window.requestAnimationFrame(tick);
+};
+
+tick();
