@@ -239,55 +239,55 @@
 
 // Again
 
-import * as THREE from "three";
-import GUI from "lil-gui";
-import gsap from "gsap";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import * as THREE from "three";
+// import GUI from "lil-gui";
+// import gsap from "gsap";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-const gui = new GUI({ width: 300, title: "First GUI", closeFolders: true });
-const cubeTweaks = gui.addFolder("Cube");
+// const gui = new GUI({ width: 300, title: "First GUI", closeFolders: true });
+// const cubeTweaks = gui.addFolder("Cube");
 
-const canvas = document.querySelector("canvas.webgl");
+// const canvas = document.querySelector("canvas.webgl");
 
-const sizes = {
-	width: window.innerWidth,
-	height: window.innerHeight,
-};
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
 
-const cursor = {
-	x: 0,
-	y: 0,
-};
-const debugObject = {};
-debugObject.color = "#f00000";
-// 1. Resize
-// 2. Fullwidth
+// const cursor = {
+// 	x: 0,
+// 	y: 0,
+// };
+// const debugObject = {};
+// debugObject.color = "#f00000";
+// // 1. Resize
+// // 2. Fullwidth
 
-window.addEventListener("resize", () => {
-	sizes.width = window.innerWidth;
-	sizes.height = window.innerHeight;
+// window.addEventListener("resize", () => {
+// 	sizes.width = window.innerWidth;
+// 	sizes.height = window.innerHeight;
 
-	camera.aspect = sizes.width / sizes.height;
-	camera.updateProjectionMatrix();
-	renderer.setSize(sizes.width, sizes.height);
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-	renderer.render(scene, camera);
-});
+// 	camera.aspect = sizes.width / sizes.height;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setSize(sizes.width, sizes.height);
+// 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// 	renderer.render(scene, camera);
+// });
 
-window.addEventListener("dblclick", () => {
-	if (!document.fullscreenElement) {
-		canvas.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
-});
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
 
-window.addEventListener("mousemove", (e) => {
-	cursor.x = e.clientX / sizes.width - 0.5;
-	cursor.y = -(e.clientY / sizes.height - 0.5);
-});
+// window.addEventListener("mousemove", (e) => {
+// 	cursor.x = e.clientX / sizes.width - 0.5;
+// 	cursor.y = -(e.clientY / sizes.height - 0.5);
+// });
 
-const scene = new THREE.Scene();
+// const scene = new THREE.Scene();
 
 // const positionArray = new Float32Array(3 * 3);
 // positionArray[0] = 0;
@@ -338,87 +338,204 @@ const scene = new THREE.Scene();
 // 	new THREE.MeshBasicMaterial({ color: "red", wireframe: true })
 // );
 
-debugObject.subdivision = 1;
-const geometry = new THREE.BoxGeometry(
-	1,
-	1,
-	1,
-	debugObject.subdivision,
-	debugObject.subdivision,
-	debugObject.subdivision
-);
+// debugObject.subdivision = 1;
+// const geometry = new THREE.BoxGeometry(
+// 	1,
+// 	1,
+// 	1,
+// 	debugObject.subdivision,
+// 	debugObject.subdivision,
+// 	debugObject.subdivision
+// );
 
-const material = new THREE.MeshBasicMaterial({
-	color: debugObject.color,
-	wireframe: true,
-});
+// const material = new THREE.MeshBasicMaterial({
+// 	color: debugObject.color,
+// 	wireframe: true,
+// });
 
-cubeTweaks.addColor(debugObject, "color").onChange((val) => {
-	// console.log("asd", val);
-	material.color.set(debugObject.color);
-});
+// cubeTweaks.addColor(debugObject, "color").onChange((val) => {
+// 	// console.log("asd", val);
+// 	material.color.set(debugObject.color);
+// });
 
-const box1 = new THREE.Mesh(geometry, material);
-cubeTweaks.add(box1.position, "y").min(0).max(2).step(0.1).name("Elevation");
-cubeTweaks.add(box1, "visible");
-debugObject.spin = () => {
-	gsap.to(box1.rotation, { y: box1.rotation.y + Math.PI * 2, duration: 4 });
+// const box1 = new THREE.Mesh(geometry, material);
+// cubeTweaks.add(box1.position, "y").min(0).max(2).step(0.1).name("Elevation");
+// cubeTweaks.add(box1, "visible");
+// debugObject.spin = () => {
+// 	gsap.to(box1.rotation, { y: box1.rotation.y + Math.PI * 2, duration: 4 });
+// };
+// console.log("mat", box1);
+
+// cubeTweaks.add(debugObject, "spin").name("spin y direction");
+// cubeTweaks
+// 	.add(debugObject, "subdivision")
+// 	.onFinishChange(() => {
+// 		box1.geometry.dispose();
+// 		box1.geometry = new THREE.BoxGeometry(
+// 			1,
+// 			1,
+// 			1,
+// 			debugObject.subdivision,
+// 			debugObject.subdivision,
+// 			debugObject.subdivision
+// 		);
+// 	})
+// 	.min(1)
+// 	.max(3)
+// 	.step(1);
+
+// scene.add(box1);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+// const axesHelper = new THREE.AxesHelper(1);
+// // scene.add(axesHelper);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas: canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// renderer.render(scene, camera);
+
+// const clock = new THREE.Clock();
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const tick = () => {
+// 	// const elapsedTime = clock.getElapsedTime();
+// 	// camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
+// 	// camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
+// 	// camera.position.y = cursor.y * 5;
+// 	// camera.position.x = Math.cos(elapsedTime) * 2;
+// 	// camera.position.z = Math.sin(elapsedTime) * 2;
+// 	// camera.position.y = 5;
+// 	// camera.lookAt(box1.position);
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// 	// console.log("el", elapsedTime);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+//// **********AGAIN****
+
+import * as THREE from "three";
+import GUI from "lil-gui";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import gsap from "gsap";
+
+const gui = new GUI();
+
+const boxFolder = gui.addFolder("Box");
+
+const canvas = document.querySelector("canvas.webgl");
+const sizes = {
+	width: window.innerWidth,
+	height: window.innerHeight,
 };
-console.log("mat", box1);
+const debugObj = {};
+debugObj.spin = () => {
+	gsap.to(box1.rotation, { y: box1.rotation.y + Math.PI * 2 });
+};
+debugObj.color = "#f00000";
+debugObj.segments = 1;
 
-cubeTweaks.add(debugObject, "spin").name("spin y direction");
-cubeTweaks
-	.add(debugObject, "subdivision")
-	.onFinishChange(() => {
-		box1.geometry.dispose();
-		box1.geometry = new THREE.BoxGeometry(
-			1,
-			1,
-			1,
-			debugObject.subdivision,
-			debugObject.subdivision,
-			debugObject.subdivision
-		);
-	})
+const cursor = {
+	x: 0,
+	y: 0,
+};
+window.addEventListener("mousemove", (e) => {
+	cursor.x = e.clientX / sizes.width - 0.5;
+	cursor.y = e.clientY / sizes.height - 0.5;
+});
+window.addEventListener("resize", () => {
+	sizes.width = window.innerWidth;
+	sizes.height = window.innerHeight;
+	camera.aspect = sizes.width / sizes.height;
+	camera.updateProjectionMatrix();
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+	renderer.setSize(sizes.width, sizes.height);
+	renderer.render(scene, camera);
+});
+
+window.addEventListener("dblclick", () => {
+	if (!document.fullscreenElement) {
+		canvas.requestFullscreen();
+	} else {
+		document.exitFullscreen();
+	}
+});
+
+// Add scene
+const scene = new THREE.Scene();
+
+// add mesh
+const geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load("static/textures/checkerboard-8x8.png");
+// texture.repeat.x = 2;
+// texture.repeat.y = 3;
+// texture.wrapS = THREE.RepeatWrapping;
+// texture.wrapT = THREE.RepeatWrapping;
+// texture.offset.x = 0.4;
+// texture.offset.y = 0.4;
+// texture.rotation = Math.PI * 0.2;
+// texture.center.x = 0.5;
+// texture.center.y = 0.5;
+texture.colorSpace = THREE.SRGBColorSpace;
+texture.magFilter = THREE.NearestFilter;
+
+const material = new THREE.MeshBasicMaterial({ map: texture });
+const box1 = new THREE.Mesh(geometry, material);
+scene.add(box1);
+boxFolder.add(box1.position, "y").min(0).max(1).step(0.1);
+boxFolder.addColor(debugObj, "color").onChange((value) => {
+	material.color.set(value);
+});
+boxFolder.add(debugObj, "spin");
+boxFolder.add(material, "wireframe");
+boxFolder
+	.add(debugObj, "segments")
 	.min(1)
 	.max(3)
-	.step(1);
+	.step(1)
+	.onFinishChange(() => {
+		box1.geometry.dispose();
+		box1.geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
+	});
 
-scene.add(box1);
-
+// add camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.z = 5;
 scene.add(camera);
-const axesHelper = new THREE.AxesHelper(1);
-// scene.add(axesHelper);
 
+// add renderer
 const renderer = new THREE.WebGLRenderer({
 	canvas: canvas,
 });
-renderer.setSize(sizes.width, sizes.height);
-
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
-
-const clock = new THREE.Clock();
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.update();
 
 const tick = () => {
-	// const elapsedTime = clock.getElapsedTime();
-	// camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
-	// camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
-	// camera.position.y = cursor.y * 5;
-	// camera.position.x = Math.cos(elapsedTime) * 2;
-	// camera.position.z = Math.sin(elapsedTime) * 2;
-	// camera.position.y = 5;
-	// camera.lookAt(box1.position);
+	// camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
+	// camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
+	// camera.position.y = cursor.y * 3;
 	controls.enableDamping = true;
 	controls.update();
+	camera.lookAt(box1.position);
 	renderer.render(scene, camera);
-	// console.log("el", elapsedTime);
 	window.requestAnimationFrame(tick);
 };
 
