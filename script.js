@@ -426,60 +426,60 @@
 
 //// **********AGAIN****
 
-import * as THREE from "three";
-import GUI from "lil-gui";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import gsap from "gsap";
+// import * as THREE from "three";
+// import GUI from "lil-gui";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import gsap from "gsap";
 
-const gui = new GUI();
+// const gui = new GUI();
 
-const boxFolder = gui.addFolder("Box");
+// const boxFolder = gui.addFolder("Box");
 
-const canvas = document.querySelector("canvas.webgl");
-const sizes = {
-	width: window.innerWidth,
-	height: window.innerHeight,
-};
-const debugObj = {};
-debugObj.spin = () => {
-	gsap.to(box1.rotation, { y: box1.rotation.y + Math.PI * 2 });
-};
-debugObj.color = "#f00000";
-debugObj.segments = 1;
+// const canvas = document.querySelector("canvas.webgl");
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+// const debugObj = {};
+// debugObj.spin = () => {
+// 	gsap.to(box1.rotation, { y: box1.rotation.y + Math.PI * 2 });
+// };
+// debugObj.color = "#f00000";
+// debugObj.segments = 1;
 
-const cursor = {
-	x: 0,
-	y: 0,
-};
-window.addEventListener("mousemove", (e) => {
-	cursor.x = e.clientX / sizes.width - 0.5;
-	cursor.y = e.clientY / sizes.height - 0.5;
-});
-window.addEventListener("resize", () => {
-	sizes.width = window.innerWidth;
-	sizes.height = window.innerHeight;
-	camera.aspect = sizes.width / sizes.height;
-	camera.updateProjectionMatrix();
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-	renderer.setSize(sizes.width, sizes.height);
-	renderer.render(scene, camera);
-});
+// const cursor = {
+// 	x: 0,
+// 	y: 0,
+// };
+// window.addEventListener("mousemove", (e) => {
+// 	cursor.x = e.clientX / sizes.width - 0.5;
+// 	cursor.y = e.clientY / sizes.height - 0.5;
+// });
+// window.addEventListener("resize", () => {
+// 	sizes.width = window.innerWidth;
+// 	sizes.height = window.innerHeight;
+// 	camera.aspect = sizes.width / sizes.height;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// 	renderer.setSize(sizes.width, sizes.height);
+// 	renderer.render(scene, camera);
+// });
 
-window.addEventListener("dblclick", () => {
-	if (!document.fullscreenElement) {
-		canvas.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
-});
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
 
-// Add scene
-const scene = new THREE.Scene();
+// // Add scene
+// const scene = new THREE.Scene();
 
-// add mesh
-const geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
-const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load("static/textures/checkerboard-8x8.png");
+// // add mesh
+// const geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
+// const textureLoader = new THREE.TextureLoader();
+// const texture = textureLoader.load("static/textures/checkerboard-8x8.png");
 // texture.repeat.x = 2;
 // texture.repeat.y = 3;
 // texture.wrapS = THREE.RepeatWrapping;
@@ -489,53 +489,485 @@ const texture = textureLoader.load("static/textures/checkerboard-8x8.png");
 // texture.rotation = Math.PI * 0.2;
 // texture.center.x = 0.5;
 // texture.center.y = 0.5;
-texture.colorSpace = THREE.SRGBColorSpace;
-texture.magFilter = THREE.NearestFilter;
+// texture.colorSpace = THREE.SRGBColorSpace;
+// texture.magFilter = THREE.NearestFilter;
 
-const material = new THREE.MeshBasicMaterial({ map: texture });
-const box1 = new THREE.Mesh(geometry, material);
-scene.add(box1);
-boxFolder.add(box1.position, "y").min(0).max(1).step(0.1);
-boxFolder.addColor(debugObj, "color").onChange((value) => {
-	material.color.set(value);
+// const material = new THREE.MeshBasicMaterial({ map: texture });
+// const box1 = new THREE.Mesh(geometry, material);
+// scene.add(box1);
+// boxFolder.add(box1.position, "y").min(0).max(1).step(0.1);
+// boxFolder.addColor(debugObj, "color").onChange((value) => {
+// 	material.color.set(value);
+// });
+// boxFolder.add(debugObj, "spin");
+// boxFolder.add(material, "wireframe");
+// boxFolder
+// 	.add(debugObj, "segments")
+// 	.min(1)
+// 	.max(3)
+// 	.step(1)
+// 	.onFinishChange(() => {
+// 		box1.geometry.dispose();
+// 		box1.geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
+// 	});
+
+// // add camera
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// // add renderer
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas: canvas,
+// });
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const tick = () => {
+// 	// camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
+// 	// camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
+// 	// camera.position.y = cursor.y * 3;
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	camera.lookAt(box1.position);
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Eighth lesson
+
+// Create scene
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import GUI from "lil-gui";
+
+// const gui = new GUI();
+
+// const box = gui.addFolder("box");
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const guiObj = {
+// 	color: "#f42f2f",
+// 	segments: 1,
+// };
+
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
+
+// window.addEventListener("resize", () => {
+// 	sizes.width = window.innerWidth;
+// 	sizes.height = window.innerHeight;
+// 	camera.aspect = sizes.width / sizes.height;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setSize(sizes.width, sizes.height);
+// 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// 	renderer.render(scene, camera);
+// });
+
+// // scene
+// const scene = new THREE.Scene();
+
+// // geometry
+// const geometry = new THREE.BoxGeometry(1, 1, 1, guiObj.segments, guiObj.segments, guiObj.segments);
+
+// // mesh
+// // textures
+
+// const loadingManager = new THREE.LoadingManager();
+// const textureLoader = new THREE.TextureLoader(loadingManager);
+// const texture = textureLoader.load("./static/textures/checkerboard-8x8.png");
+// // const texture = textureLoader.load("./static/textures/door/normal.jpg");
+// texture.colorSpace = THREE.SRGBColorSpace;
+// texture.magFilter = THREE.NearestFilter;
+// // texture.repeat.x = 2;
+// // texture.repeat.y = 2;
+// // texture.wrapS = THREE.RepeatWrapping;
+// // texture.wrapT = THREE.RepeatWrapping;
+
+// const material = new THREE.MeshBasicMaterial({
+// 	color: guiObj.color,
+// 	wireframe: false,
+// 	map: texture,
+// });
+
+// const mesh = new THREE.Mesh(geometry, material);
+// box.add(mesh.position, "y", 0, 1, 0.1);
+// box.addColor(guiObj, "color").onChange(() => material.color.set(guiObj.color));
+// box.add(material, "wireframe");
+// box.add(guiObj, "segments")
+// 	.min(1)
+// 	.max(3)
+// 	.step(1)
+// 	.onFinishChange(() => {
+// 		mesh.geometry.dispose();
+// 		mesh.geometry = new THREE.BoxGeometry(1, 1, 1, guiObj.segments, guiObj.segments, guiObj.segments);
+// 	});
+// // mesh.position.y = 0.0;
+// scene.add(mesh);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// scene.add(camera);
+// camera.position.z = 5;
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// renderer.render(scene, camera);
+
+// function tick() {
+// 	window.requestAnimationFrame(tick);
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// }
+
+// tick();
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+// import GUI from "lil-gui";
+
+// const gui = new GUI();
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// const textureLoader = new THREE.TextureLoader();
+// const doorColorTexture = textureLoader.load("/static/textures/door/color.jpg");
+// const doorAlphaTexture = textureLoader.load("/static/textures/door/alpha.jpg");
+// const doorAmbientOcclusionTexture = textureLoader.load("/static/textures/door/ambientOcclusion.jpg");
+// const doorHeightTexture = textureLoader.load("/static/textures/door/height.jpg");
+// const doorMetalnessTexture = textureLoader.load("/static/textures/door/metalness.jpg");
+// const doorNormalTexture = textureLoader.load("/static/textures/door/normal.jpg");
+// const doorRoughnessTexture = textureLoader.load("/static/textures/door/roughness.jpg");
+// const matcapTexture = textureLoader.load("/static/textures/matcaps/3.png");
+// const gradientTexture = textureLoader.load("/static/textures/gradients/5.jpg");
+// doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+// doorAlphaTexture.colorSpace = THREE.SRGBColorSpace;
+// doorAmbientOcclusionTexture.colorSpace = THREE.SRGBColorSpace;
+// doorHeightTexture.colorSpace = THREE.SRGBColorSpace;
+// doorMetalnessTexture.colorSpace = THREE.SRGBColorSpace;
+// doorNormalTexture.colorSpace = THREE.SRGBColorSpace;
+// doorRoughnessTexture.colorSpace = THREE.SRGBColorSpace;
+// matcapTexture.colorSpace = THREE.SRGBColorSpace;
+// gradientTexture.colorSpace = THREE.SRGBColorSpace;
+
+// // const material = new THREE.MeshBasicMaterial({
+// // 	wireframe: false,
+// // 	map: gradientTexture,
+// // 	side: THREE.DoubleSide,
+// // });
+// // const material = new THREE.MeshNormalMaterial({
+// // 	side: THREE.DoubleSide,
+// // 	flatShading: true,
+// // });
+
+// // const material = new THREE.MeshMatcapMaterial();
+// // material.side = THREE.DoubleSide;
+// // material.matcap = matcapTexture;
+
+// // const material = new THREE.MeshLambertMaterial({
+// // 	// map: doorColorTexture,
+// // 	side: THREE.DoubleSide,
+// // });
+
+// // gradientTexture.minFilter = THREE.NearestFilter;
+// // gradientTexture.magFilter = THREE.NearestFilter;
+// // gradientTexture.generateMipmaps = false;
+// // const material = new THREE.MeshToonMaterial({
+// // 	side: THREE.DoubleSide,
+// // 	gradientMap: gradientTexture,
+// // });
+
+// // const material = new THREE.MeshStandardMaterial({
+// // 	side: THREE.DoubleSide,
+// // 	// wireframe: true,
+// // });
+
+// // material.roughness = 1;
+// // material.metalness = 1;
+
+// // material.map = doorColorTexture;
+// // material.aoMap = doorAmbientOcclusionTexture;
+// // material.aoMapIntensity = 1;
+// // material.displacementMap = doorHeightTexture;
+// // material.displacementScale = 0.1;
+// // material.metalnessMap = doorMetalnessTexture;
+// // material.roughnessMap = doorRoughnessTexture;
+// // material.normalMap = doorNormalTexture;
+// // material.alphaMap = doorAlphaTexture;
+// // material.transparent = true;
+
+// const material = new THREE.MeshLambertMaterial({
+// 	side: THREE.DoubleSide,
+// 	// wireframe: true,
+// });
+// // material.map = doorColorTexture;
+
+// // material.roughness = 0;
+// // material.metalness = 0;
+
+// // material.map = doorColorTexture;
+// // material.aoMap = doorAmbientOcclusionTexture;
+// // material.aoMapIntensity = 1;
+// // material.displacementMap = doorHeightTexture;
+// // material.displacementScale = 0.1;
+// // material.metalnessMap = doorMetalnessTexture;
+// // material.roughnessMap = doorRoughnessTexture;
+// // material.normalMap = doorNormalTexture;
+// // material.alphaMap = doorAlphaTexture;
+// // material.transparent = true;
+
+// // material.transmission = 1;
+// // material.ior = 1.6;
+// // material.thickness = 0.5;
+
+// // gui.add(material, "transmission").min(0).max(10).step(0.1);
+// // gui.add(material, "ior").min(0).max(2.33).step(0.1);
+// // gui.add(material, "thickness").min(0).max(10).step(0.1);
+
+// // gui.add(material, "metalness").min(0).max(1).step(0.1);
+// // gui.add(material, "roughness").min(0).max(1).step(0.1);
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const pointLight = new THREE.PointLight("#fff", 40);
+// pointLight.position.x = 2;
+// pointLight.position.y = 3;
+// pointLight.position.z = 4;
+
+// // gui.add(pointLight.position, "x").min(-10).max(10).step(1);
+// // gui.add(pointLight.position, "y").min(-10).max(10).step(1);
+// // gui.add(pointLight.position, "z").min(-10).max(10).step(1);
+
+// // material.shininess = 100;
+// // material.specular = new THREE.Color("blue");
+
+// scene.add(pointLight);
+
+// const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32), material);
+// const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 128), material);
+// const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 100, 100), material);
+
+// sphere.position.x = -1.5;
+// torus.position.x = 1.5;
+
+// scene.add(torus, sphere, plane);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+// scene.add(camera);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("./static/textures/environmentMap/cobblestone_street_night_4k.hdr", (environmentMap) => {
+// 	environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+// 	scene.background = environmentMap;
+// 	scene.environment = environmentMap;
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const clock = new THREE.Clock();
+
+// const tick = () => {
+// 	const elapsedTime = clock.getElapsedTime();
+// 	sphere.rotation.y = 0.1 * elapsedTime;
+// 	plane.rotation.y = 0.1 * elapsedTime;
+// 	torus.rotation.y = 0.1 * elapsedTime;
+
+// 	sphere.rotation.x = -0.15 * elapsedTime;
+// 	plane.rotation.x = -0.15 * elapsedTime;
+// 	torus.rotation.x = -0.15 * elapsedTime;
+
+// 	controls.update();
+// 	renderer.render(scene, camera);
+
+// 	requestAnimationFrame(tick);
+// };
+
+// tick();
+
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import GUI from "lil-gui";
+
+/*
+
+	DOM ELEMENT
+
+*/
+
+const canvas = document.querySelector("canvas.webgl");
+
+/*
+
+	SIZE OBJECT
+
+*/
+
+const sizes = {
+	width: window.innerWidth,
+	height: window.innerHeight,
+};
+
+/*
+
+	SCENE & GUI INSTANCE
+
+*/
+
+const gui = new GUI();
+const scene = new THREE.Scene();
+
+/*
+
+	TEXTURES
+
+*/
+
+const textureLoader = new THREE.TextureLoader();
+const coffeeColorTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_BaseColor.jpg");
+const coffeeAmbientTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_AmbientOcclusion.jpg");
+const coffeeNormalTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Normal.jpg");
+const coffeeDisplacementTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Height.png");
+const coffeeRoughnessTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Roughness.jpg");
+coffeeColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+/*
+
+	MESH
+
+*/
+
+const materialSphere = new THREE.MeshStandardMaterial({
+	map: coffeeColorTexture,
 });
-boxFolder.add(debugObj, "spin");
-boxFolder.add(material, "wireframe");
-boxFolder
-	.add(debugObj, "segments")
-	.min(1)
-	.max(3)
-	.step(1)
-	.onFinishChange(() => {
-		box1.geometry.dispose();
-		box1.geometry = new THREE.BoxGeometry(1, 1, 1, debugObj.segments, debugObj.segments, debugObj.segments);
-	});
 
-// add camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+materialSphere.aoMap = coffeeAmbientTexture;
+materialSphere.aoMapIntensity = 2.4;
+
+materialSphere.normalMap = coffeeNormalTexture;
+materialSphere.displacementMap = coffeeDisplacementTexture;
+materialSphere.displacementScale = 0.1;
+
+materialSphere.roughnessMap = coffeeRoughnessTexture;
+
+// materialSphere.metalness = 0.75;
+// materialSphere.roughness = 0.65;
+
+gui.add(materialSphere, "aoMapIntensity").min(0).max(10).step(0.1);
+// gui.add(materialSphere, "metalness").min(0).max(10).step(0.1);
+// gui.add(materialSphere, "roughness").min(0).max(10).step(0.1);
+
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), materialSphere);
+scene.add(sphere);
+
+/*
+
+	CAMERA 
+
+*/
+
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
 camera.position.z = 5;
 scene.add(camera);
 
-// add renderer
-const renderer = new THREE.WebGLRenderer({
-	canvas: canvas,
+/*
+
+	ORBIT CONTROL
+
+*/
+
+const controls = new OrbitControls(camera, canvas);
+controls.update();
+
+/*
+
+	LIGHTS
+
+*/
+
+// const ambientLight = new THREE.AmbientLight("#fff");
+// const pointLight = new THREE.PointLight("#fff", 30);
+// pointLight.position.x = 2;
+// pointLight.position.y = 3;
+// pointLight.position.z = 4;
+// scene.add(ambientLight);
+// scene.add(pointLight);
+
+/*
+
+	ENVIRONMENT LOADER
+
+*/
+
+const rgbeLoader = new RGBELoader();
+rgbeLoader.load("/static/textures/environmentMap/satara_night_4k.hdr", (envMap) => {
+	envMap.mapping = THREE.EquirectangularReflectionMapping;
+	scene.background = envMap;
+	scene.environment = envMap;
 });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/*
+
+	RENDERER
+
+*/
+
+const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
 
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.update();
-
 const tick = () => {
-	// camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
-	// camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
-	// camera.position.y = cursor.y * 3;
+	renderer.render(scene, camera);
 	controls.enableDamping = true;
 	controls.update();
-	camera.lookAt(box1.position);
-	renderer.render(scene, camera);
 	window.requestAnimationFrame(tick);
 };
 
