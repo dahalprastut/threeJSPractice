@@ -832,136 +832,518 @@
 
 // tick();
 
+// ====================================
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+// import GUI from "lil-gui";
+// import { FontLoader } from "three/examples/jsm/Addons.js";
+// import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+
+// /*
+
+// 	DOM ELEMENT
+
+// */
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// /*
+
+// 	SIZE OBJECT
+
+// */
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// /*
+
+// 	SCENE & GUI INSTANCE
+
+// */
+
+// const gui = new GUI();
+// const scene = new THREE.Scene();
+
+// /*
+
+// 	TEXTURES
+
+// */
+
+// const textureLoader = new THREE.TextureLoader();
+// const coffeeColorTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_BaseColor.jpg");
+// const coffeeAmbientTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_AmbientOcclusion.jpg");
+// const coffeeNormalTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Normal.jpg");
+// const coffeeDisplacementTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Height.png");
+// const coffeeRoughnessTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Roughness.jpg");
+// const matcapTexture = textureLoader.load("./static/textures/matcaps/1.png");
+// matcapTexture.colorSpace = THREE.SRGBColorSpace;
+// coffeeColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// /*
+
+// 	MESH
+
+// */
+
+// const materialSphere = new THREE.MeshStandardMaterial({
+// 	map: coffeeColorTexture,
+// });
+
+// materialSphere.aoMap = coffeeAmbientTexture;
+// materialSphere.aoMapIntensity = 2.4;
+
+// materialSphere.normalMap = coffeeNormalTexture;
+// materialSphere.displacementMap = coffeeDisplacementTexture;
+// materialSphere.displacementScale = 0.1;
+
+// materialSphere.roughnessMap = coffeeRoughnessTexture;
+
+// // materialSphere.metalness = 0.75;
+// // materialSphere.roughness = 0.65;
+
+// gui.add(materialSphere, "aoMapIntensity").min(0).max(10).step(0.1);
+// // gui.add(materialSphere, "metalness").min(0).max(10).step(0.1);
+// // gui.add(materialSphere, "roughness").min(0).max(10).step(0.1);
+
+// const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), materialSphere);
+// scene.add(sphere);
+
+// /*
+
+// 	3D TEXTS
+
+// */
+// const loader = new FontLoader();
+// loader.load("./static/fonts/helvetiker_regular.typeface.json", (font) => {
+// 	const textGeometry = new TextGeometry("Prastut Dahal", {
+// 		font,
+// 		size: 0.5,
+// 		depth: 0.2,
+// 		curveSegments: 5,
+// 		bevelEnabled: true,
+// 		bevelThickness: 0.03,
+// 		bevelSize: 0.02,
+// 		bevelOffset: 0,
+// 		bevelSegments: 1,
+// 	});
+// 	const torusGeometry = new THREE.TorusGeometry(0.6, 0.3, 18, 30);
+// 	const material = new THREE.MeshMatcapMaterial();
+// 	material.matcap = matcapTexture;
+// 	const textMesh = new THREE.Mesh(textGeometry, material);
+// 	for (let i = 0; i < 30; i++) {
+// 		const torusMesh = new THREE.Mesh(torusGeometry, material);
+// 		const number = Math.random() - 0.5;
+// 		torusMesh.position.x = (Math.random() - 0.5) * 10;
+// 		torusMesh.position.y = (Math.random() - 0.5) * 10;
+// 		torusMesh.position.z = (Math.random() - 0.5) * 10;
+// 		torusMesh.rotation.x = Math.PI * (Math.random() - 0.5) * 10;
+// 		torusMesh.rotation.y = Math.PI * (Math.random() - 0.5) * 10;
+// 		torusMesh.rotation.z = Math.PI * (Math.random() - 0.5) * 10;
+// 		torusMesh.scale.set(number, number, number);
+// 		scene.add(torusMesh);
+// 	}
+// 	textGeometry.computeBoundingBox();
+// 	console.log("tesx", textGeometry.boundingBox);
+// 	textGeometry.center();
+// 	textGeometry.translate(0, textGeometry.boundingBox.max.y + 1, 0);
+// 	scene.add(textMesh);
+// });
+
+// /*
+
+// 	CAMERA
+
+// */
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// /*
+
+// 	ORBIT CONTROL
+
+// */
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// /*
+
+// 	LIGHTS
+
+// */
+
+// // const ambientLight = new THREE.AmbientLight("#fff");
+// // const pointLight = new THREE.PointLight("#fff", 30);
+// // pointLight.position.x = 2;
+// // pointLight.position.y = 3;
+// // pointLight.position.z = 4;
+// // scene.add(ambientLight);
+// // scene.add(pointLight);
+
+// /*
+
+// 	ENVIRONMENT LOADER
+
+// */
+
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("/static/textures/environmentMap/satara_night_4k.hdr", (envMap) => {
+// 	envMap.mapping = THREE.EquirectangularReflectionMapping;
+// 	scene.background = envMap;
+// 	scene.environment = envMap;
+// });
+
+// /*
+
+// 	RENDERER
+
+// */
+
+// const renderer = new THREE.WebGLRenderer({ canvas });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// =================================
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+// import { FontLoader } from "three/addons/loaders/FontLoader.js";
+// import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
+
+// const textureLoader = new THREE.TextureLoader();
+// const textureColor = textureLoader.load("./static/textures/door/color.jpg");
+// const textureAlpha = textureLoader.load("./static/textures/door/alpha.jpg");
+// const textureAmbient = textureLoader.load("./static/textures/door/ambientOcclusion.jpg");
+// const textureHeight = textureLoader.load("./static/textures/door/height.jpg");
+// const textureMetalness = textureLoader.load("./static/textures/door/metalness.jpg");
+// const textureNormal = textureLoader.load("./static/textures/door/normal.jpg");
+// const textureRoughness = textureLoader.load("./static/textures/door/roughness.jpg");
+// const matcapTexture = textureLoader.load("./static/textures/matcaps/2.png");
+// const coffeeTexture = textureLoader.load("./static/textures/gradients/3.jpg");
+// textureColor.colorSpace = THREE.SRGBColorSpace;
+// // texture.minFilter = THREE.NearestFilter;
+// // texture.magFilter = THREE.NearestFilter;
+
+// const boxMaterial = new THREE.MeshPhysicalMaterial();
+// // boxMaterial.color = "red";
+// // boxMaterial.map = textureColor;
+// boxMaterial.side = THREE.DoubleSide;
+// // boxMaterial.aoMap = textureAmbient;
+// // boxMaterial.aoMapIntensity = 1.5;
+// // boxMaterial.displacementMap = textureHeight;
+// // boxMaterial.displacementScale = 0.1;
+// // boxMaterial.metalnessMap = textureMetalness;
+// // boxMaterial.normalMap = textureNormal;
+// // boxMaterial.alphaMap = textureAlpha;
+// // boxMaterial.roughnessMap = textureRoughness;
+// boxMaterial.metalness = 0;
+// boxMaterial.roughness = 0;
+
+// boxMaterial.transmission = 1;
+// boxMaterial.ior = 2;
+// boxMaterial.thickness = 0.6;
+// const box = new THREE.Mesh(new THREE.SphereGeometry(0.5, 100, 100), boxMaterial);
+
+// scene.add(box);
+
+// // const ambientLight = new THREE.AmbientLight("#fff", 2);
+// // const pointLight = new THREE.PointLight("#fff", 30);
+// // pointLight.position.z = 4;
+// // pointLight.position.y = 4;
+// // pointLight.position.x = -1;
+// // scene.add(ambientLight);
+// // scene.add(pointLight);
+
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("./static/textures/environmentMap/2k.hdr", (environmentMap) => {
+// 	environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+// 	scene.background = environmentMap;
+// 	scene.environment = environmentMap;
+// });
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const loader = new FontLoader();
+// loader.load("./static/fonts/helvetiker_regular.typeface.json", (font) => {
+// 	const textGeometry = new TextGeometry("Prastut!", {
+// 		font: font,
+// 		size: 1,
+// 		depth: 0.2,
+// 		curveSegments: 12,
+// 		bevelEnabled: true,
+// 		bevelThickness: 0.001,
+// 		bevelSize: 0.02,
+// 		bevelOffset: 0,
+// 		bevelSegments: 5,
+// 	});
+// 	textGeometry.center();
+// 	const textMaterial = new THREE.MeshPhysicalMaterial({
+// 		// wireframe: true,
+// 	});
+// 	textMaterial.metalness = 1;
+// 	textMaterial.roughness = 0;
+// 	textMaterial.transmission = 1;
+// 	// textMaterial.ior = 2.2;
+// 	// textMaterial.thickness = 5;
+// 	textMaterial.clearcoat = 0.8;
+// 	textMaterial.iridescence = 0.8;
+// 	textMaterial.iridescenceIOR = 2;
+
+// 	const text = new THREE.Mesh(textGeometry, textMaterial);
+// 	text.position.y = 1;
+// 	scene.add(text);
+// });
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// renderer.render(scene, camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// const axesHelper = new THREE.AxesHelper(1);
+// scene.add(axesHelper);
+
+// const material = new THREE.MeshStandardMaterial();
+// material.side = THREE.DoubleSide;
+
+// const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+// box.castShadow = true;
+// const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 16), material);
+// // sphere.receiveShadow = true;
+// sphere.castShadow = true;
+// sphere.position.x = 2;
+// const torus = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.2, 54, 80), material);
+// torus.position.x = -2;
+// torus.castShadow = true;
+// const plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 4), material);
+// plane.receiveShadow = true;
+// plane.position.y = -1;
+// plane.rotation.x = -Math.PI * 0.5;
+
+// scene.add(box, sphere, torus, plane);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+// const pointLight = new THREE.PointLight("#fff", 2);
+
+// pointLight.position.x = -0.8;
+// pointLight.position.y = 0.8;
+// // scene.add(pointLight);
+// scene.add(ambientLight, pointLight);
+// const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.5);
+// scene.add(pointLightHelper);
+// const directionalLight = new THREE.DirectionalLight("#F3BD20", 1.2);
+
+// directionalLight.position.y = 5;
+// directionalLight.position.x = -5;
+
+// directionalLight.castShadow = true;
+// directionalLight.shadow.mapSize.width = 1024;
+// directionalLight.shadow.mapSize.height = 1024;
+// directionalLight.shadow.camera.near = 3;
+// directionalLight.shadow.camera.far = 15;
+// directionalLight.shadow.camera.top = 3;
+// directionalLight.shadow.camera.bottom = -2;
+// directionalLight.shadow.camera.left = -2;
+// directionalLight.shadow.camera.right = 2;
+// directionalLight.shadow.radius = 10;
+
+// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.5);
+// scene.add(directionalLight, directionalLightHelper);
+
+// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// scene.add(directionalLightCameraHelper);
+
+// console.log(directionalLight);
+
+// // const hemisphereLight = new THREE.HemisphereLight("blue", "green", 2);
+// // hemisphereLight.position.x = 3;
+// // const HemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 0.5);
+// // scene.add(hemisphereLight, HemisphereLightHelper);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.shadowMap.enabled = true;
+// // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	controls.enableDamping = true;
+
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import GUI from "lil-gui";
 
-/*
-
-	DOM ELEMENT
-
-*/
-
 const canvas = document.querySelector("canvas.webgl");
+const gui = new GUI();
 
-/*
-
-	SIZE OBJECT
-
-*/
+const sphereGUI = gui.addFolder("Sphere");
+const lightHelperGUI = gui.addFolder("Light Helper");
+const pointLightHelperGUI = lightHelperGUI.addFolder("Point Light");
+const directionalLightHelperGUI = lightHelperGUI.addFolder("Directional Light");
 
 const sizes = {
 	width: window.innerWidth,
 	height: window.innerHeight,
 };
 
-/*
-
-	SCENE & GUI INSTANCE
-
-*/
-
-const gui = new GUI();
-const scene = new THREE.Scene();
-
-/*
-
-	TEXTURES
-
-*/
-
-const textureLoader = new THREE.TextureLoader();
-const coffeeColorTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_BaseColor.jpg");
-const coffeeAmbientTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_AmbientOcclusion.jpg");
-const coffeeNormalTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Normal.jpg");
-const coffeeDisplacementTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Height.png");
-const coffeeRoughnessTexture = textureLoader.load("./static/textures/coffee/Coffee_Grains_001_Roughness.jpg");
-coffeeColorTexture.colorSpace = THREE.SRGBColorSpace;
-
-/*
-
-	MESH
-
-*/
-
-const materialSphere = new THREE.MeshStandardMaterial({
-	map: coffeeColorTexture,
+window.addEventListener("resize", () => {
+	sizes.width = window.innerWidth;
+	sizes.height = window.innerHeight;
+	camera.aspect = sizes.width / sizes.height;
+	camera.updateProjectionMatrix();
+	renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+	renderer.setSize(sizes.width, sizes.height);
 });
 
-materialSphere.aoMap = coffeeAmbientTexture;
-materialSphere.aoMapIntensity = 2.4;
+window.addEventListener("dblclick", () => {
+	console.log("doc", document);
+	if (!document.fullscreenElement) {
+		canvas.requestFullscreen();
+	} else {
+		document.exitFullscreen();
+	}
+});
 
-materialSphere.normalMap = coffeeNormalTexture;
-materialSphere.displacementMap = coffeeDisplacementTexture;
-materialSphere.displacementScale = 0.1;
+const scene = new THREE.Scene();
 
-materialSphere.roughnessMap = coffeeRoughnessTexture;
+const material = new THREE.MeshStandardMaterial();
+material.side = THREE.DoubleSide;
 
-// materialSphere.metalness = 0.75;
-// materialSphere.roughness = 0.65;
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.7, 64, 64), material);
+sphere.castShadow = true;
+sphereGUI.add(sphere.position, "x").min(-2).max(2).step(0.2);
+sphereGUI.add(sphere.position, "y").min(-2).max(2).step(0.2);
+sphereGUI.add(sphere.position, "z").min(-2).max(2).step(0.2);
 
-gui.add(materialSphere, "aoMapIntensity").min(0).max(10).step(0.1);
-// gui.add(materialSphere, "metalness").min(0).max(10).step(0.1);
-// gui.add(materialSphere, "roughness").min(0).max(10).step(0.1);
-
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), materialSphere);
-scene.add(sphere);
-
-/*
-
-	CAMERA 
-
-*/
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), material);
+plane.receiveShadow = true;
+plane.rotation.x = -Math.PI * 0.5;
+plane.position.y = -1;
+scene.add(sphere, plane);
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
 camera.position.z = 5;
 scene.add(camera);
 
-/*
+const ambientLight = new THREE.AmbientLight("#fff", 1);
+const pointLight = new THREE.PointLight("#fff", 2);
+pointLight.position.y = 1.4;
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.5);
+pointLightHelperGUI.add(pointLightHelper, "visible");
+pointLightHelperGUI.add(pointLight.position, "x").min(-2).max(2).step(0.2);
+pointLightHelperGUI.add(pointLight.position, "y").min(-2).max(2).step(0.2);
+pointLightHelperGUI.add(pointLight.position, "z").min(-2).max(2).step(0.2);
+// console.log("dire", directionalLight);
 
-	ORBIT CONTROL
+const directionalLight = new THREE.DirectionalLight("#f7f6d5", 1);
+directionalLight.position.y = 3;
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
+directionalLight.shadow.camera.far = 5;
+directionalLight.shadow.radius = 10;
 
-*/
+const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.5);
+directionalLightHelperGUI.add(directionalLightHelper, "visible");
+directionalLightHelperGUI.add(directionalLight.position, "x").min(-8).max(8).step(0.2);
+directionalLightHelperGUI.add(directionalLight.position, "y").min(-8).max(8).step(0.2);
+directionalLightHelperGUI.add(directionalLight.position, "z").min(-8).max(8).step(0.2);
+scene.add(ambientLight, pointLight, directionalLight);
+scene.add(pointLightHelper, directionalLightHelper);
+
+// const directinalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// const pointLightCameraHelper = new THREE.CameraHelper(pointLight.shadow.camera);
+// scene.add(directinalLightCameraHelper);
+// scene.add(pointLightCameraHelper);
 
 const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 controls.update();
 
-/*
-
-	LIGHTS
-
-*/
-
-// const ambientLight = new THREE.AmbientLight("#fff");
-// const pointLight = new THREE.PointLight("#fff", 30);
-// pointLight.position.x = 2;
-// pointLight.position.y = 3;
-// pointLight.position.z = 4;
-// scene.add(ambientLight);
-// scene.add(pointLight);
-
-/*
-
-	ENVIRONMENT LOADER
-
-*/
-
-const rgbeLoader = new RGBELoader();
-rgbeLoader.load("/static/textures/environmentMap/satara_night_4k.hdr", (envMap) => {
-	envMap.mapping = THREE.EquirectangularReflectionMapping;
-	scene.background = envMap;
-	scene.environment = envMap;
+const renderer = new THREE.WebGLRenderer({
+	canvas,
 });
-
-/*
-
-	RENDERER
-
-*/
-
-const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+renderer.shadowMap.enabled = true;
 renderer.render(scene, camera);
 
 const tick = () => {
