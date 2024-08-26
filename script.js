@@ -1359,11 +1359,665 @@
 
 // =====================================
 
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { Sky } from "three/addons/objects/Sky.js";
+// import GUI from "lil-gui";
+
+// const gui = new GUI();
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
+
+// window.addEventListener("resize", () => {
+// 	sizes.width = window.innerWidth;
+// 	sizes.height = window.innerHeight;
+// 	camera.aspect = sizes.width / sizes.height;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+// 	renderer.setSize(sizes.width, sizes.height);
+// });
+
+// const scene = new THREE.Scene();
+
+// // ********** Textures **********
+// // floor
+// const textureLoader = new THREE.TextureLoader();
+// const floorAlphaTexture = textureLoader.load("./static/textures/house/floor/alpha.jpg");
+// const floorColorTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.jpg"
+// );
+// const floorNormalTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.jpg"
+// );
+// const floorDisplacementTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.jpg"
+// );
+// const floorARMTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.jpg"
+// );
+
+// floorColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// floorColorTexture.repeat.set(8, 8);
+// floorNormalTexture.repeat.set(8, 8);
+// floorDisplacementTexture.repeat.set(8, 8);
+// floorARMTexture.repeat.set(8, 8);
+
+// floorColorTexture.wrapS = THREE.RepeatWrapping;
+// floorColorTexture.wrapT = THREE.RepeatWrapping;
+// floorNormalTexture.wrapS = THREE.RepeatWrapping;
+// floorNormalTexture.wrapT = THREE.RepeatWrapping;
+// floorDisplacementTexture.wrapS = THREE.RepeatWrapping;
+// floorDisplacementTexture.wrapT = THREE.RepeatWrapping;
+// floorARMTexture.wrapS = THREE.RepeatWrapping;
+// floorARMTexture.wrapT = THREE.RepeatWrapping;
+
+// // roof
+// const roofColorTexture = textureLoader.load(
+// 	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_diff_1k.jpg"
+// );
+// const roofARMTexture = textureLoader.load("./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_arm_1k.jpg");
+// const roofNormalTexture = textureLoader.load(
+// 	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.jpg"
+// );
+
+// roofColorTexture.colorSpace = THREE.SRGBColorSpace;
+// roofColorTexture.repeat.set(3, 1);
+// roofARMTexture.repeat.set(3, 1);
+// roofNormalTexture.repeat.set(3, 1);
+
+// roofColorTexture.wrapS = THREE.RepeatWrapping;
+// roofColorTexture.wrapT = THREE.RepeatWrapping;
+// roofARMTexture.wrapS = THREE.RepeatWrapping;
+// roofARMTexture.wrapT = THREE.RepeatWrapping;
+// roofNormalTexture.wrapS = THREE.RepeatWrapping;
+// roofNormalTexture.wrapT = THREE.RepeatWrapping;
+
+// // walls
+// const wallColorTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.jpg"
+// );
+// const wallARMTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.jpg"
+// );
+// const wallNormalTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.jpg"
+// );
+// wallColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// // door
+// const doorColorTexture = textureLoader.load("./static/textures/house/door/color.jpg");
+// const doorAlphaTexture = textureLoader.load("./static/textures/house/door/alpha.jpg");
+// const doorAOTexture = textureLoader.load("./static/textures/house/door/ambientOcclusion.jpg");
+// const doorHeightTexture = textureLoader.load("./static/textures/house/door/height.jpg");
+// const doorMetalnessTexture = textureLoader.load("./static/textures/house/door/metalness.jpg");
+// const doorRoughnessTexture = textureLoader.load("./static/textures/house/door/roughness.jpg");
+// const doorNormalTexture = textureLoader.load("./static/textures/house/door/normal.jpg");
+// doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// // bush
+// const bushColorTexture = textureLoader.load(
+// 	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg"
+// );
+// const bushARMTexture = textureLoader.load(
+// 	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.jpg"
+// );
+// const bushNormalTexture = textureLoader.load(
+// 	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg"
+// );
+// bushColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// // grave
+// const graveColorTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg"
+// );
+// const graveARMTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg"
+// );
+// const graveNormalTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg"
+// );
+
+// graveColorTexture.colorSpace = THREE.SRGBColorSpace;
+// // ********** Floor **********
+
+// const floor = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(20, 20, 100, 100),
+// 	new THREE.MeshStandardMaterial({
+// 		map: floorColorTexture,
+// 		metalnessMap: floorARMTexture,
+// 		roughnessMap: floorARMTexture,
+// 		aoMap: floorARMTexture,
+// 		normalMap: floorNormalTexture,
+// 		displacementMap: floorDisplacementTexture,
+// 		displacementScale: 0.3,
+// 		displacementBias: -0.2,
+// 		alphaMap: floorAlphaTexture,
+// 		transparent: true,
+// 	})
+// );
+
+// gui.add(floor.material, "displacementScale").min(0).max(1).step(0.1);
+// gui.add(floor.material, "displacementBias").min(-1).max(1).step(0.1);
+// floor.rotation.x = -Math.PI * 0.5;
+// scene.add(floor);
+
+// // ********** House **********
+// const house = new THREE.Group();
+// scene.add(house);
+
+// // walls
+// const walls = new THREE.Mesh(
+// 	new THREE.BoxGeometry(4, 2.5, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		map: wallColorTexture,
+// 		normalMap: wallNormalTexture,
+// 		aoMap: wallARMTexture,
+// 		roughnessMap: wallARMTexture,
+// 		metalnessMap: wallARMTexture,
+// 	})
+// );
+// walls.position.y = 1.25;
+// house.add(walls);
+
+// // roof
+
+// const roof = new THREE.Mesh(
+// 	new THREE.ConeGeometry(3.5, 1.5, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		map: roofColorTexture,
+// 		normalMap: roofNormalTexture,
+// 		aoMap: roofARMTexture,
+// 		roughnessMap: roofARMTexture,
+// 		metalnessMap: roofARMTexture,
+// 	})
+// );
+// roof.position.y = 2.5 + 0.75;
+// roof.rotation.y = Math.PI * 0.25;
+// house.add(roof);
+
+// // door
+// const door = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(2.2, 2, 100, 100),
+// 	new THREE.MeshStandardMaterial({
+// 		map: doorColorTexture,
+// 		aoMap: doorAOTexture,
+// 		transparent: true,
+// 		normalMap: doorNormalTexture,
+// 		displacementMap: doorHeightTexture,
+// 		displacementScale: 0.23,
+// 		displacementBias: -0.1,
+// 		metalnessMap: doorMetalnessTexture,
+// 		roughnessMap: doorRoughnessTexture,
+// 		alphaMap: doorAlphaTexture,
+// 	})
+// );
+
+// gui.add(door.material, "displacementScale").min(0).max(1).step(0.1);
+// gui.add(door.material, "displacementBias").min(-1).max(1).step(0.1);
+// door.position.y = 1;
+// door.position.z = 2 + 0.0001;
+// house.add(door);
+
+// // bushes
+// const bushMaterial = new THREE.MeshStandardMaterial({
+// 	map: bushColorTexture,
+// 	normalMap: bushNormalTexture,
+// 	aoMap: bushARMTexture,
+// 	roughnessMap: bushARMTexture,
+// 	metalnessMap: bushARMTexture,
+// });
+// const bush1 = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), bushMaterial);
+// bush1.position.y = 0.4;
+// bush1.position.x = 0.8;
+// bush1.position.z = 2 + 0.4;
+// bush1.rotation.x = 2;
+// const bush2 = new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 32), bushMaterial);
+// bush2.position.y = 0.3;
+// bush2.position.x = 0.3;
+// bush2.position.z = 2 + 0.3;
+// bush2.rotation.x = 2;
+
+// const bush3 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), bushMaterial);
+// bush3.position.y = 0.5;
+// bush3.position.x = -1;
+// bush3.position.z = 2 + 0.5;
+// bush3.rotation.x = 2;
+
+// house.add(bush1, bush2, bush3);
+
+// // ********** Graves **********
+
+// const graves = new THREE.Group();
+// scene.add(graves);
+
+// const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
+// const graveMaterial = new THREE.MeshStandardMaterial({
+// 	map: graveColorTexture,
+// 	normalMap: graveNormalTexture,
+// 	aoMap: graveARMTexture,
+// 	roughnessMap: graveARMTexture,
+// 	metalnessMap: graveARMTexture,
+// });
+
+// for (let i = 0; i < 30; i++) {
+// 	const angle = Math.random() * Math.PI * 2;
+// 	const radius = 3 + Math.random() * 4;
+// 	const x = Math.sin(angle) * radius;
+// 	const z = Math.cos(angle) * radius;
+
+// 	const grave = new THREE.Mesh(graveGeometry, graveMaterial);
+// 	grave.position.x = x;
+// 	grave.position.y = Math.random() * 0.4;
+// 	grave.position.z = z;
+// 	grave.rotation.x = Math.random();
+// 	graves.add(grave);
+// }
+
+// // Camera
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 15;
+// camera.position.x = 5;
+// camera.position.y = 5;
+// scene.add(camera);
+
+// // Lights
+// const ambientLight = new THREE.AmbientLight("#86cdff", 0.275);
+// const directionalLight = new THREE.DirectionalLight("#86cdff", 1);
+// directionalLight.position.x = 3;
+// directionalLight.position.y = 2;
+// directionalLight.position.z = -8;
+// const bulb = new THREE.PointLight("#fcf36f", 3);
+// bulb.position.z = 2.2;
+// bulb.position.y = 2.5;
+
+// scene.add(ambientLight, directionalLight, bulb);
+// // ghost lights
+
+// const ghost1 = new THREE.PointLight("#8800ff", 4);
+// const ghost2 = new THREE.PointLight("#ff0088", 4);
+// const ghost3 = new THREE.PointLight("#ff0000", 4);
+
+// scene.add(ghost1, ghost2, ghost3);
+
+// // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
+// // scene.add(directionalLightHelper);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// // Shadows
+
+// directionalLight.castShadow = true;
+// floor.receiveShadow = true;
+// roof.castShadow = true;
+// walls.receiveShadow = true;
+// walls.castShadow = true;
+// ghost1.castShadow = true;
+// ghost2.castShadow = true;
+// ghost3.castShadow = true;
+// for (const grave of graves.children) {
+// 	grave.castShadow = true;
+// 	grave.receiveShadow = true;
+// }
+
+// // Shadows optimization
+
+// directionalLight.shadow.mapSize.width = 256;
+// directionalLight.shadow.mapSize.height = 256;
+// directionalLight.shadow.camera.left = -10;
+// directionalLight.shadow.camera.right = 10;
+// directionalLight.shadow.camera.far = 25;
+// ghost1.shadow.mapSize.width = 256;
+// ghost1.shadow.mapSize.height = 256;
+// ghost1.shadow.camera.far = 5;
+// ghost2.shadow.mapSize.width = 256;
+// ghost2.shadow.mapSize.height = 256;
+// ghost2.shadow.camera.far = 5;
+// ghost3.shadow.mapSize.width = 256;
+// ghost3.shadow.mapSize.height = 256;
+// ghost3.shadow.camera.far = 5;
+
+// // const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// // scene.add(directionalLightCameraHelper);
+// // const ghostLightCameraHelper = new THREE.CameraHelper(ghost1.shadow.camera);
+// // scene.add(ghostLightCameraHelper);
+
+// // Sky
+
+// const sky = new Sky();
+// sky.material.uniforms["turbidity"].value = 10;
+// sky.material.uniforms["rayleigh"].value = 3;
+// sky.material.uniforms["mieCoefficient"].value = 0.1;
+// sky.material.uniforms["mieDirectionalG"].value = 0.95;
+// sky.material.uniforms["sunPosition"].value.set(0.3, -0.038, -0.95);
+// sky.scale.set(100, 100, 100);
+// scene.add(sky);
+
+// // Fog
+// console.log("sc", scene);
+// // 0f343f
+// scene.fog = new THREE.FogExp2("#04343f", 0.1);
+
+// // Renderer
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// const tick = () => {
+// 	timer.update();
+// 	const elapsedTime = timer.getElapsed();
+// 	ghost1.position.x = Math.sin(elapsedTime * 0.5) * 5;
+// 	ghost1.position.z = Math.cos(elapsedTime * 0.5) * 5;
+// 	ghost1.position.y = Math.sin(elapsedTime * 0.5) + Math.sin(elapsedTime * 2);
+// 	ghost2.position.x = Math.sin(-elapsedTime * 1.5) * 4;
+// 	ghost2.position.z = Math.cos(-elapsedTime * 1.5) * 4;
+// 	ghost2.position.y = Math.cos(elapsedTime * 0.3) + Math.sin(elapsedTime);
+// 	ghost3.position.x = Math.sin(elapsedTime + 3) * 6.6;
+// 	ghost3.position.z = Math.cos(elapsedTime + 3) * 6.6;
+// 	ghost3.position.y = Math.sin(elapsedTime * 0.3) + Math.cos(elapsedTime);
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// ==================================================
+// ====================== PARTICLES =================
+
+// import * as THREE from "three";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
+// scene.add(box);
+
+// const particlesGeometry = new THREE.SphereGeometry(1, 32, 32);
+// Creating own geometry
+
+// const textureLoader = new THREE.TextureLoader();
+// const ringTexture = textureLoader.load("./static/textures/particles/2.png");
+
+// const count = 300;
+// const positionsArray = new Float32Array(count * 3 * 3);
+// for (let i = 0; i < count * 3 * 3; i++) {
+// 	positionsArray[i] = (Math.random() - 0.5) * 10;
+// }
+
+// const positionAttribute = new THREE.BufferAttribute(positionsArray, 3);
+// const particlesGeometry = new THREE.BufferGeometry();
+// particlesGeometry.setAttribute("position", positionAttribute);
+
+// const particlesMaterial = new THREE.PointsMaterial({
+// 	// color: "red",
+// 	// map: ringTexture,
+// 	alphaMap: ringTexture,
+// 	transparent: true,
+// 	size: 1,
+// 	sizeAttenuation: true,
+// });
+
+// // particlesMaterial.alphaTest = 0.001;
+// // particlesMaterial.depthTest = false;
+// particlesMaterial.depthWrite = false;
+// particlesMaterial.blending = THREE.AdditiveBlending;
+
+// const points = new THREE.Points(particlesGeometry, particlesMaterial);
+// scene.add(points);
+
+// const particleGeometry = new THREE.SphereGeometry(1, 32, 32);
+
+// const particleGeometry = new THREE.CircleGeometry(1.5, 32, 32);
+// const particleMaterial = new THREE.PointsMaterial({
+// 	color: "purple",
+// 	size: 0.06,
+// 	sizeAttenuation: true,
+// });
+
+// const particle = new THREE.Points(particleGeometry, particleMaterial);
+// scene.add(particle);
+
+// const sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), new THREE.MeshBasicMaterial({ color: "orange" }));
+// scene.add(sphere);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// console.log(timer);
+// console.log("par", particleGeometry);
+// const numberOfParticlesPosition = particleGeometry.attributes.position.array.length;
+// const tick = () => {
+// 	timer.update();
+// 	const elapsedTime = timer.getElapsed();
+// 	// particle.rotation.y = elapsedTime;
+// 	let xCordinate = 0;
+// 	let yCordinate = 1;
+// 	let zCordinate = 2;
+// 	for (let i = 0; i < numberOfParticlesPosition; i++) {
+// 		const x = particleGeometry.attributes.position.array[xCordinate];
+// 		const z = particleGeometry.attributes.position.array[zCordinate];
+// 		particleGeometry.attributes.position.array[yCordinate] = Math.sin(elapsedTime + x * 2 + z * 2) * 2;
+// 		yCordinate += 2;
+// 		xCordinate += 2;
+// 		zCordinate += 2;
+// 	}
+// 	particleGeometry.attributes.position.needsUpdate = true;
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// ----------
+// Galaxy generator
+// -----------
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import GUI from "lil-gui";
+
+// const gui = new GUI();
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// const galaxyParameters = {};
+
+// galaxyParameters.count = 100000;
+// galaxyParameters.size = 0.002;
+// galaxyParameters.radius = 4;
+// galaxyParameters.lines = 3;
+// galaxyParameters.spin = 1;
+// galaxyParameters.randomValue = 0.2;
+// galaxyParameters.power = 3;
+// galaxyParameters.innerColor = "#ff6030";
+// galaxyParameters.outerColor = "#0000FF";
+
+// // const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
+// // scene.add(box);
+
+// let starsGeometry = null;
+// let starsMaterial = null;
+// let stars = null;
+
+// const generateGalaxy = () => {
+// 	if (starsMaterial !== null) {
+// 		starsGeometry.dispose();
+// 		starsMaterial.dispose();
+// 		scene.remove(stars);
+// 	}
+// 	starsGeometry = new THREE.BufferGeometry();
+// 	const position = new Float32Array(galaxyParameters.count * 3);
+// 	const colors = new Float32Array(galaxyParameters.count * 3);
+
+// 	const colorInside = new THREE.Color(galaxyParameters.innerColor);
+// 	console.log("col", colorInside);
+// 	const colorOutside = new THREE.Color(galaxyParameters.outerColor);
+
+// 	for (let i = 0; i < galaxyParameters.count; i++) {
+// 		const i3 = i * 3;
+// 		const radius = Math.random() * galaxyParameters.radius;
+// 		const spinAngle = radius * galaxyParameters.spin;
+// 		const branchAngle = ((i % galaxyParameters.lines) / galaxyParameters.lines) * Math.PI * 2;
+
+// 		const randomX =
+// 			Math.pow(Math.random(), galaxyParameters.power) *
+// 			(Math.random() < 0.5 ? 1 : -1) *
+// 			galaxyParameters.randomValue;
+// 		const randomY =
+// 			Math.pow(Math.random(), galaxyParameters.power) *
+// 			(Math.random() < 0.5 ? 1 : -1) *
+// 			galaxyParameters.randomValue;
+// 		const randomZ =
+// 			Math.pow(Math.random(), galaxyParameters.power) *
+// 			(Math.random() < 0.5 ? 1 : -1) *
+// 			galaxyParameters.randomValue;
+
+// 		position[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+// 		position[i3 + 1] = 0 + randomY;
+// 		position[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+// 		const mixColor = colorInside.clone();
+// 		mixColor.lerp(colorOutside, radius / galaxyParameters.radius);
+// 		colors[i3] = mixColor.r;
+// 		colors[i3 + 1] = mixColor.g;
+// 		colors[i3 + 2] = mixColor.b;
+// 	}
+// 	const positionAttribute = new THREE.BufferAttribute(position, 3);
+// 	const colorAttribute = new THREE.BufferAttribute(colors, 3);
+// 	starsGeometry.setAttribute("position", positionAttribute);
+// 	starsGeometry.setAttribute("color", colorAttribute);
+// 	starsMaterial = new THREE.PointsMaterial({
+// 		size: galaxyParameters.size,
+// 		sizeAttenuation: true,
+// 		depthWrite: false,
+// 		blending: THREE.AdditiveBlending,
+// 		color: "#ff5588",
+// 		vertexColors: true,
+// 	});
+
+// 	stars = new THREE.Points(starsGeometry, starsMaterial);
+// 	scene.add(stars);
+// };
+
+// generateGalaxy();
+
+// gui.add(galaxyParameters, "count")
+// 	.min(100000)
+// 	.max(500000)
+// 	.step(10000)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "size")
+// 	.min(0.001)
+// 	.max(0.1)
+// 	.step(0.001)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "radius")
+// 	.min(1)
+// 	.max(5)
+// 	.step(1)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "lines")
+// 	.min(1)
+// 	.max(10)
+// 	.step(1)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "spin")
+// 	.min(-5)
+// 	.max(5)
+// 	.step(0.1)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "randomValue")
+// 	.min(0.001)
+// 	.max(0.3)
+// 	.step(0.1)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.add(galaxyParameters, "power")
+// 	.min(1)
+// 	.max(10)
+// 	.step(0.1)
+// 	.onFinishChange(() => generateGalaxy());
+// gui.addColor(galaxyParameters, "innerColor").onFinishChange(() => generateGalaxy());
+// gui.addColor(galaxyParameters, "outerColor").onFinishChange(() => generateGalaxy());
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({ canvas });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const tick = () => {
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+// tick();
+
+// =============================================
+
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { Timer } from "three/addons/misc/Timer.js";
-import { Sky } from "three/addons/objects/Sky.js";
 import GUI from "lil-gui";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const gui = new GUI();
 
@@ -1374,370 +2028,129 @@ const sizes = {
 	height: window.innerHeight,
 };
 
-window.addEventListener("dblclick", () => {
-	if (!document.fullscreenElement) {
-		canvas.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
-});
-
-window.addEventListener("resize", () => {
-	sizes.width = window.innerWidth;
-	sizes.height = window.innerHeight;
-	camera.aspect = sizes.width / sizes.height;
-	camera.updateProjectionMatrix();
-	renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
-	renderer.setSize(sizes.width, sizes.height);
-});
-
 const scene = new THREE.Scene();
 
-// ********** Textures **********
-// floor
-const textureLoader = new THREE.TextureLoader();
-const floorAlphaTexture = textureLoader.load("./static/textures/house/floor/alpha.jpg");
-const floorColorTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.jpg"
-);
-const floorNormalTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.jpg"
-);
-const floorDisplacementTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.jpg"
-);
-const floorARMTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.jpg"
-);
+// const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
+// scene.add(box);
 
-floorColorTexture.colorSpace = THREE.SRGBColorSpace;
+const particleObj = {};
+particleObj.count = 10000;
+particleObj.size = 0.002;
+particleObj.radius = 4;
+particleObj.galaxyCurves = 3;
+particleObj.bendingAngle = 1;
+particleObj.randomValue = 0.1;
+particleObj.pow = 3;
+particleObj.innerColor = "#1aed7d";
+particleObj.outerColor = "#d10f0f";
+let particleGeometry = null;
+let particleMaterial = null;
+let points = null;
 
-floorColorTexture.repeat.set(8, 8);
-floorNormalTexture.repeat.set(8, 8);
-floorDisplacementTexture.repeat.set(8, 8);
-floorARMTexture.repeat.set(8, 8);
+const createGalaxy = () => {
+	if (particleGeometry !== null) {
+		particleGeometry.dispose();
+		particleMaterial.dispose();
+		scene.remove(points);
+	}
+	particleGeometry = new THREE.BufferGeometry();
+	const position = new Float32Array(particleObj.count * 3);
+	const colors = new Float32Array(particleObj.count * 3);
+	const innerColor = new THREE.Color(particleObj.innerColor);
+	const outerColor = new THREE.Color(particleObj.outerColor);
+	for (let i = 0; i < particleObj.count; i++) {
+		const coordinate = i * 3;
+		// if i = 0:0, i = 1 : 33, i = 2: 66
+		const angle = ((i % particleObj.galaxyCurves) / particleObj.galaxyCurves) * Math.PI * 2;
+		const radius = particleObj.radius * Math.random();
+		const bendingAngle = radius * particleObj.bendingAngle;
 
-floorColorTexture.wrapS = THREE.RepeatWrapping;
-floorColorTexture.wrapT = THREE.RepeatWrapping;
-floorNormalTexture.wrapS = THREE.RepeatWrapping;
-floorNormalTexture.wrapT = THREE.RepeatWrapping;
-floorDisplacementTexture.wrapS = THREE.RepeatWrapping;
-floorDisplacementTexture.wrapT = THREE.RepeatWrapping;
-floorARMTexture.wrapS = THREE.RepeatWrapping;
-floorARMTexture.wrapT = THREE.RepeatWrapping;
+		const randomX =
+			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+		const randomY =
+			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+		const randomZ =
+			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+		position[coordinate] = Math.sin(angle + bendingAngle) * radius + randomX;
+		position[coordinate + 1] = 0 + randomY;
+		position[coordinate + 2] = Math.cos(angle + bendingAngle) * radius + randomZ;
+		const mixedColor = innerColor.clone();
+		mixedColor.lerp(outerColor, 0.5);
+		colors[coordinate] = mixedColor.r;
+		colors[coordinate + 1] = mixedColor.g;
+		colors[coordinate + 2] = mixedColor.b;
+	}
+	const positionAttribute = new THREE.BufferAttribute(position, 3);
+	const colorAttribute = new THREE.BufferAttribute(colors, 3);
+	particleGeometry.setAttribute("position", positionAttribute);
+	particleGeometry.setAttribute("color", colorAttribute);
+	particleMaterial = new THREE.PointsMaterial({
+		size: particleObj.size,
+		sizeAttenuation: true,
+		depthWrite: false,
+		vertexColors: true,
+		blending: THREE.AdditiveBlending,
+	});
+	points = new THREE.Points(particleGeometry, particleMaterial);
+	scene.add(points);
+};
 
-// roof
-const roofColorTexture = textureLoader.load(
-	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_diff_1k.jpg"
-);
-const roofARMTexture = textureLoader.load("./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_arm_1k.jpg");
-const roofNormalTexture = textureLoader.load(
-	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.jpg"
-);
+createGalaxy();
 
-roofColorTexture.colorSpace = THREE.SRGBColorSpace;
-roofColorTexture.repeat.set(3, 1);
-roofARMTexture.repeat.set(3, 1);
-roofNormalTexture.repeat.set(3, 1);
+gui.add(particleObj, "count")
+	.min(10000)
+	.max(50000)
+	.step(5000)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "size")
+	.min(0.001)
+	.max(0.5)
+	.step(0.001)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "radius")
+	.min(1)
+	.max(8)
+	.step(0.5)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "galaxyCurves")
+	.min(1)
+	.max(8)
+	.step(1)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "bendingAngle")
+	.min(-8)
+	.max(8)
+	.step(1)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "randomValue")
+	.min(0.01)
+	.max(0.5)
+	.step(0.01)
+	.onFinishChange(() => createGalaxy());
+gui.add(particleObj, "pow")
+	.min(1)
+	.max(5)
+	.step(0.5)
+	.onFinishChange(() => createGalaxy());
+gui.addColor(particleObj, "innerColor").onFinishChange(() => createGalaxy());
+gui.addColor(particleObj, "outerColor").onFinishChange(() => createGalaxy());
 
-roofColorTexture.wrapS = THREE.RepeatWrapping;
-roofColorTexture.wrapT = THREE.RepeatWrapping;
-roofARMTexture.wrapS = THREE.RepeatWrapping;
-roofARMTexture.wrapT = THREE.RepeatWrapping;
-roofNormalTexture.wrapS = THREE.RepeatWrapping;
-roofNormalTexture.wrapT = THREE.RepeatWrapping;
-
-// walls
-const wallColorTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.jpg"
-);
-const wallARMTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.jpg"
-);
-const wallNormalTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.jpg"
-);
-wallColorTexture.colorSpace = THREE.SRGBColorSpace;
-
-// door
-const doorColorTexture = textureLoader.load("./static/textures/house/door/color.jpg");
-const doorAlphaTexture = textureLoader.load("./static/textures/house/door/alpha.jpg");
-const doorAOTexture = textureLoader.load("./static/textures/house/door/ambientOcclusion.jpg");
-const doorHeightTexture = textureLoader.load("./static/textures/house/door/height.jpg");
-const doorMetalnessTexture = textureLoader.load("./static/textures/house/door/metalness.jpg");
-const doorRoughnessTexture = textureLoader.load("./static/textures/house/door/roughness.jpg");
-const doorNormalTexture = textureLoader.load("./static/textures/house/door/normal.jpg");
-doorColorTexture.colorSpace = THREE.SRGBColorSpace;
-
-// bush
-const bushColorTexture = textureLoader.load(
-	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg"
-);
-const bushARMTexture = textureLoader.load(
-	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.jpg"
-);
-const bushNormalTexture = textureLoader.load(
-	"./static/textures/house/bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg"
-);
-bushColorTexture.colorSpace = THREE.SRGBColorSpace;
-
-// grave
-const graveColorTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg"
-);
-const graveARMTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg"
-);
-const graveNormalTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg"
-);
-
-graveColorTexture.colorSpace = THREE.SRGBColorSpace;
-// ********** Floor **********
-
-const floor = new THREE.Mesh(
-	new THREE.PlaneGeometry(20, 20, 100, 100),
-	new THREE.MeshStandardMaterial({
-		map: floorColorTexture,
-		metalnessMap: floorARMTexture,
-		roughnessMap: floorARMTexture,
-		aoMap: floorARMTexture,
-		normalMap: floorNormalTexture,
-		displacementMap: floorDisplacementTexture,
-		displacementScale: 0.3,
-		displacementBias: -0.2,
-		alphaMap: floorAlphaTexture,
-		transparent: true,
-	})
-);
-
-gui.add(floor.material, "displacementScale").min(0).max(1).step(0.1);
-gui.add(floor.material, "displacementBias").min(-1).max(1).step(0.1);
-floor.rotation.x = -Math.PI * 0.5;
-scene.add(floor);
-
-// ********** House **********
-const house = new THREE.Group();
-scene.add(house);
-
-// walls
-const walls = new THREE.Mesh(
-	new THREE.BoxGeometry(4, 2.5, 4),
-	new THREE.MeshStandardMaterial({
-		map: wallColorTexture,
-		normalMap: wallNormalTexture,
-		aoMap: wallARMTexture,
-		roughnessMap: wallARMTexture,
-		metalnessMap: wallARMTexture,
-	})
-);
-walls.position.y = 1.25;
-house.add(walls);
-
-// roof
-
-const roof = new THREE.Mesh(
-	new THREE.ConeGeometry(3.5, 1.5, 4),
-	new THREE.MeshStandardMaterial({
-		map: roofColorTexture,
-		normalMap: roofNormalTexture,
-		aoMap: roofARMTexture,
-		roughnessMap: roofARMTexture,
-		metalnessMap: roofARMTexture,
-	})
-);
-roof.position.y = 2.5 + 0.75;
-roof.rotation.y = Math.PI * 0.25;
-house.add(roof);
-
-// door
-const door = new THREE.Mesh(
-	new THREE.PlaneGeometry(2.2, 2, 100, 100),
-	new THREE.MeshStandardMaterial({
-		map: doorColorTexture,
-		aoMap: doorAOTexture,
-		transparent: true,
-		normalMap: doorNormalTexture,
-		displacementMap: doorHeightTexture,
-		displacementScale: 0.23,
-		displacementBias: -0.1,
-		metalnessMap: doorMetalnessTexture,
-		roughnessMap: doorRoughnessTexture,
-		alphaMap: doorAlphaTexture,
-	})
-);
-
-gui.add(door.material, "displacementScale").min(0).max(1).step(0.1);
-gui.add(door.material, "displacementBias").min(-1).max(1).step(0.1);
-door.position.y = 1;
-door.position.z = 2 + 0.0001;
-house.add(door);
-
-// bushes
-const bushMaterial = new THREE.MeshStandardMaterial({
-	map: bushColorTexture,
-	normalMap: bushNormalTexture,
-	aoMap: bushARMTexture,
-	roughnessMap: bushARMTexture,
-	metalnessMap: bushARMTexture,
-});
-const bush1 = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), bushMaterial);
-bush1.position.y = 0.4;
-bush1.position.x = 0.8;
-bush1.position.z = 2 + 0.4;
-bush1.rotation.x = 2;
-const bush2 = new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 32), bushMaterial);
-bush2.position.y = 0.3;
-bush2.position.x = 0.3;
-bush2.position.z = 2 + 0.3;
-bush2.rotation.x = 2;
-
-const bush3 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), bushMaterial);
-bush3.position.y = 0.5;
-bush3.position.x = -1;
-bush3.position.z = 2 + 0.5;
-bush3.rotation.x = 2;
-
-house.add(bush1, bush2, bush3);
-
-// ********** Graves **********
-
-const graves = new THREE.Group();
-scene.add(graves);
-
-const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
-const graveMaterial = new THREE.MeshStandardMaterial({
-	map: graveColorTexture,
-	normalMap: graveNormalTexture,
-	aoMap: graveARMTexture,
-	roughnessMap: graveARMTexture,
-	metalnessMap: graveARMTexture,
-});
-
-for (let i = 0; i < 30; i++) {
-	const angle = Math.random() * Math.PI * 2;
-	const radius = 3 + Math.random() * 4;
-	const x = Math.sin(angle) * radius;
-	const z = Math.cos(angle) * radius;
-
-	const grave = new THREE.Mesh(graveGeometry, graveMaterial);
-	grave.position.x = x;
-	grave.position.y = Math.random() * 0.4;
-	grave.position.z = z;
-	grave.rotation.x = Math.random();
-	graves.add(grave);
-}
-
-// Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-camera.position.z = 15;
-camera.position.x = 5;
-camera.position.y = 5;
+camera.position.z = 5;
 scene.add(camera);
-
-// Lights
-const ambientLight = new THREE.AmbientLight("#86cdff", 0.275);
-const directionalLight = new THREE.DirectionalLight("#86cdff", 1);
-directionalLight.position.x = 3;
-directionalLight.position.y = 2;
-directionalLight.position.z = -8;
-const bulb = new THREE.PointLight("#fcf36f", 3);
-bulb.position.z = 2.2;
-bulb.position.y = 2.5;
-
-scene.add(ambientLight, directionalLight, bulb);
-// ghost lights
-
-const ghost1 = new THREE.PointLight("#8800ff", 4);
-const ghost2 = new THREE.PointLight("#ff0088", 4);
-const ghost3 = new THREE.PointLight("#ff0000", 4);
-
-scene.add(ghost1, ghost2, ghost3);
-
-// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
-// scene.add(directionalLightHelper);
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.update();
 
-// Shadows
-
-directionalLight.castShadow = true;
-floor.receiveShadow = true;
-roof.castShadow = true;
-walls.receiveShadow = true;
-walls.castShadow = true;
-ghost1.castShadow = true;
-ghost2.castShadow = true;
-ghost3.castShadow = true;
-for (const grave of graves.children) {
-	grave.castShadow = true;
-	grave.receiveShadow = true;
-}
-
-// Shadows optimization
-
-directionalLight.shadow.mapSize.width = 256;
-directionalLight.shadow.mapSize.height = 256;
-directionalLight.shadow.camera.left = -10;
-directionalLight.shadow.camera.right = 10;
-directionalLight.shadow.camera.far = 25;
-ghost1.shadow.mapSize.width = 256;
-ghost1.shadow.mapSize.height = 256;
-ghost1.shadow.camera.far = 5;
-ghost2.shadow.mapSize.width = 256;
-ghost2.shadow.mapSize.height = 256;
-ghost2.shadow.camera.far = 5;
-ghost3.shadow.mapSize.width = 256;
-ghost3.shadow.mapSize.height = 256;
-ghost3.shadow.camera.far = 5;
-
-// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-// scene.add(directionalLightCameraHelper);
-// const ghostLightCameraHelper = new THREE.CameraHelper(ghost1.shadow.camera);
-// scene.add(ghostLightCameraHelper);
-
-// Sky
-
-const sky = new Sky();
-sky.material.uniforms["turbidity"].value = 10;
-sky.material.uniforms["rayleigh"].value = 3;
-sky.material.uniforms["mieCoefficient"].value = 0.1;
-sky.material.uniforms["mieDirectionalG"].value = 0.95;
-sky.material.uniforms["sunPosition"].value.set(0.3, -0.038, -0.95);
-sky.scale.set(100, 100, 100);
-scene.add(sky);
-
-// Fog
-console.log("sc", scene);
-// 0f343f
-scene.fog = new THREE.FogExp2("#04343f", 0.1);
-
-// Renderer
 const renderer = new THREE.WebGLRenderer({
 	canvas,
 });
-
 renderer.setSize(sizes.width, sizes.height);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
 renderer.render(scene, camera);
 
-const timer = new Timer();
 const tick = () => {
-	timer.update();
-	const elapsedTime = timer.getElapsed();
-	ghost1.position.x = Math.sin(elapsedTime * 0.5) * 5;
-	ghost1.position.z = Math.cos(elapsedTime * 0.5) * 5;
-	ghost1.position.y = Math.sin(elapsedTime * 0.5) + Math.sin(elapsedTime * 2);
-	ghost2.position.x = Math.sin(-elapsedTime * 1.5) * 4;
-	ghost2.position.z = Math.cos(-elapsedTime * 1.5) * 4;
-	ghost2.position.y = Math.cos(elapsedTime * 0.3) + Math.sin(elapsedTime);
-	ghost3.position.x = Math.sin(elapsedTime + 3) * 6.6;
-	ghost3.position.z = Math.cos(elapsedTime + 3) * 6.6;
-	ghost3.position.y = Math.sin(elapsedTime * 0.3) + Math.cos(elapsedTime);
+	controls.enableDamping = true;
 	controls.update();
 	renderer.render(scene, camera);
 	window.requestAnimationFrame(tick);
