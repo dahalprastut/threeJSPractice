@@ -2015,129 +2015,630 @@
 
 // =============================================
 
+// import * as THREE from "three";
+// import GUI from "lil-gui";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+// const gui = new GUI();
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// // const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
+// // scene.add(box);
+
+// const particleObj = {};
+// particleObj.count = 10000;
+// particleObj.size = 0.002;
+// particleObj.radius = 4;
+// particleObj.galaxyCurves = 3;
+// particleObj.bendingAngle = 1;
+// particleObj.randomValue = 0.1;
+// particleObj.pow = 3;
+// particleObj.innerColor = "#1aed7d";
+// particleObj.outerColor = "#d10f0f";
+// let particleGeometry = null;
+// let particleMaterial = null;
+// let points = null;
+
+// const createGalaxy = () => {
+// 	if (particleGeometry !== null) {
+// 		particleGeometry.dispose();
+// 		particleMaterial.dispose();
+// 		scene.remove(points);
+// 	}
+// 	particleGeometry = new THREE.BufferGeometry();
+// 	const position = new Float32Array(particleObj.count * 3);
+// 	const colors = new Float32Array(particleObj.count * 3);
+// 	const innerColor = new THREE.Color(particleObj.innerColor);
+// 	const outerColor = new THREE.Color(particleObj.outerColor);
+// 	for (let i = 0; i < particleObj.count; i++) {
+// 		const coordinate = i * 3;
+// 		// if i = 0:0, i = 1 : 33, i = 2: 66
+// 		const angle = ((i % particleObj.galaxyCurves) / particleObj.galaxyCurves) * Math.PI * 2;
+// 		const radius = particleObj.radius * Math.random();
+// 		const bendingAngle = radius * particleObj.bendingAngle;
+
+// 		const randomX =
+// 			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+// 		const randomY =
+// 			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+// 		const randomZ =
+// 			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
+// 		position[coordinate] = Math.sin(angle + bendingAngle) * radius + randomX;
+// 		position[coordinate + 1] = 0 + randomY;
+// 		position[coordinate + 2] = Math.cos(angle + bendingAngle) * radius + randomZ;
+// 		const mixedColor = innerColor.clone();
+// 		mixedColor.lerp(outerColor, 0.5);
+// 		colors[coordinate] = mixedColor.r;
+// 		colors[coordinate + 1] = mixedColor.g;
+// 		colors[coordinate + 2] = mixedColor.b;
+// 	}
+// 	const positionAttribute = new THREE.BufferAttribute(position, 3);
+// 	const colorAttribute = new THREE.BufferAttribute(colors, 3);
+// 	particleGeometry.setAttribute("position", positionAttribute);
+// 	particleGeometry.setAttribute("color", colorAttribute);
+// 	particleMaterial = new THREE.PointsMaterial({
+// 		size: particleObj.size,
+// 		sizeAttenuation: true,
+// 		depthWrite: false,
+// 		vertexColors: true,
+// 		blending: THREE.AdditiveBlending,
+// 	});
+// 	points = new THREE.Points(particleGeometry, particleMaterial);
+// 	scene.add(points);
+// };
+
+// createGalaxy();
+
+// gui.add(particleObj, "count")
+// 	.min(10000)
+// 	.max(50000)
+// 	.step(5000)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "size")
+// 	.min(0.001)
+// 	.max(0.5)
+// 	.step(0.001)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "radius")
+// 	.min(1)
+// 	.max(8)
+// 	.step(0.5)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "galaxyCurves")
+// 	.min(1)
+// 	.max(8)
+// 	.step(1)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "bendingAngle")
+// 	.min(-8)
+// 	.max(8)
+// 	.step(1)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "randomValue")
+// 	.min(0.01)
+// 	.max(0.5)
+// 	.step(0.01)
+// 	.onFinishChange(() => createGalaxy());
+// gui.add(particleObj, "pow")
+// 	.min(1)
+// 	.max(5)
+// 	.step(0.5)
+// 	.onFinishChange(() => createGalaxy());
+// gui.addColor(particleObj, "innerColor").onFinishChange(() => createGalaxy());
+// gui.addColor(particleObj, "outerColor").onFinishChange(() => createGalaxy());
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const tick = () => {
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// ====================================
+
+/* 
+	PORTFOLIO
+*/
+
+// ======================================
+
+// import * as THREE from "three";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import GUI from "lil-gui";
+
+// const gui = new GUI();
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const cursor = {
+// 	x: 0,
+// 	y: 0,
+// };
+
+// const guiObj = {};
+// guiObj.materialColor = "#fff";
+
+// let scrollY = 0;
+
+// window.addEventListener("scroll", () => {
+// 	scrollY = window.scrollY;
+// });
+
+// window.addEventListener("mousemove", (e) => {
+// 	(cursor.x = e.x), (cursor.y = e.y);
+// });
+
+// const dist = 4;
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// // Textures
+
+// const textureLoader = new THREE.TextureLoader();
+// const gradientTexture = textureLoader.load("./static/textures/gradients/3.jpg");
+// gradientTexture.magFilter = THREE.NearestFilter;
+
+// const material = new THREE.MeshToonMaterial({ color: guiObj.materialColor, gradientMap: gradientTexture });
+
+// gui.addColor(guiObj, "materialColor").onFinishChange((el) => {
+// 	material.color.set(el);
+// });
+
+// const cone = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1, 32), material);
+// const torus = new THREE.Mesh(new THREE.TorusKnotGeometry(0.5, 0.1), material);
+// const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1), material);
+
+// const coneDist = dist * 0;
+// const torusDist = dist * 1;
+// const cylinderDist = dist * 2;
+
+// cone.position.y = coneDist;
+// cone.position.x = 2;
+// torus.position.y = -torusDist;
+// torus.position.x = -2;
+// cylinder.position.y = -cylinderDist;
+// cylinder.position.x = 2;
+
+// const meshes = [cone, torus, cylinder];
+
+// scene.add(cone, torus, cylinder);
+
+// // Particles
+
+// const particlesGeometry = new THREE.BufferGeometry();
+// const count = 200;
+// const positions = new Float32Array(count * 3);
+// for (let i = 0; i < count; i++) {
+// 	positions[i * 3] = (Math.random() - 0.5) * 10;
+// 	positions[i * 3 + 1] = dist * 0.5 - Math.random() * meshes.length * dist;
+// 	positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+// }
+
+// const positionAttribute = new THREE.BufferAttribute(positions, 3);
+// particlesGeometry.setAttribute("position", positionAttribute);
+
+// const particleMaterial = new THREE.PointsMaterial({
+// 	size: 0.03,
+// 	color: "#fff",
+// 	sizeAttenuation: true,
+// });
+
+// const points = new THREE.Points(particlesGeometry, particleMaterial);
+// scene.add(points);
+
+// // Light
+
+// const directionalLight = new THREE.DirectionalLight("#fff", 1.5);
+// // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.5);
+// // directionalLight.position.x = 2;
+// directionalLight.position.y = 1;
+// scene.add(directionalLight);
+
+// const cameraGroup = new THREE.Group();
+
+// const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// cameraGroup.add(camera);
+// scene.add(cameraGroup);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// 	alpha: true,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// const tick = () => {
+// 	timer.update();
+// 	meshes.forEach((el) => {
+// 		el.rotation.x = timer.getElapsed() * 0.1;
+// 		el.rotation.y = timer.getElapsed() * 0.1;
+// 	});
+
+// 	// cone.rotation.z = timer.getElapsed() * 0.1;
+// 	camera.position.y = -(scrollY / sizes.height) * dist;
+// 	cameraGroup.position.x += (cursor.x / sizes.width - 0.5 - cameraGroup.position.x) * 0.1 * 5 * timer.getDelta();
+// 	cameraGroup.position.y += (-(cursor.y / sizes.height - 0.5) - cameraGroup.position.y) * 0.1 * 5 * timer.getDelta();
+
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// PORTFOLIO Completed
+
 import * as THREE from "three";
-import GUI from "lil-gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-
-const gui = new GUI();
-
-const canvas = document.querySelector("canvas.webgl");
 
 const sizes = {
 	width: window.innerWidth,
 	height: window.innerHeight,
 };
 
+window.addEventListener("dblclick", () => {
+	if (!document.fullscreenElement) {
+		canvas.requestFullscreen();
+	} else {
+		document.exitFullscreen();
+	}
+});
+
+window.addEventListener("resize", () => {
+	sizes.width = window.innerWidth;
+	sizes.height = window.innerHeight;
+	camera.aspect = sizes.width / sizes.height;
+	camera.updateProjectionMatrix();
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+	renderer.setSize(sizes.width, sizes.height);
+});
+
+const canvas = document.querySelector("canvas.webgl");
+
 const scene = new THREE.Scene();
 
-// const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
-// scene.add(box);
+/* 
+	TEXTURES STARTS
+*/
 
-const particleObj = {};
-particleObj.count = 10000;
-particleObj.size = 0.002;
-particleObj.radius = 4;
-particleObj.galaxyCurves = 3;
-particleObj.bendingAngle = 1;
-particleObj.randomValue = 0.1;
-particleObj.pow = 3;
-particleObj.innerColor = "#1aed7d";
-particleObj.outerColor = "#d10f0f";
-let particleGeometry = null;
-let particleMaterial = null;
-let points = null;
+const textureLoader = new THREE.TextureLoader();
 
-const createGalaxy = () => {
-	if (particleGeometry !== null) {
-		particleGeometry.dispose();
-		particleMaterial.dispose();
-		scene.remove(points);
-	}
-	particleGeometry = new THREE.BufferGeometry();
-	const position = new Float32Array(particleObj.count * 3);
-	const colors = new Float32Array(particleObj.count * 3);
-	const innerColor = new THREE.Color(particleObj.innerColor);
-	const outerColor = new THREE.Color(particleObj.outerColor);
-	for (let i = 0; i < particleObj.count; i++) {
-		const coordinate = i * 3;
-		// if i = 0:0, i = 1 : 33, i = 2: 66
-		const angle = ((i % particleObj.galaxyCurves) / particleObj.galaxyCurves) * Math.PI * 2;
-		const radius = particleObj.radius * Math.random();
-		const bendingAngle = radius * particleObj.bendingAngle;
+const wallColorTexture = textureLoader.load(
+	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp"
+);
+const wallARMTexture = textureLoader.load(
+	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp"
+);
+const wallNormalTexture = textureLoader.load(
+	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp"
+);
 
-		const randomX =
-			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
-		const randomY =
-			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
-		const randomZ =
-			Math.pow(Math.random(), particleObj.pow) * (Math.random() < 0.5 ? -1 : 1) * particleObj.randomValue;
-		position[coordinate] = Math.sin(angle + bendingAngle) * radius + randomX;
-		position[coordinate + 1] = 0 + randomY;
-		position[coordinate + 2] = Math.cos(angle + bendingAngle) * radius + randomZ;
-		const mixedColor = innerColor.clone();
-		mixedColor.lerp(outerColor, 0.5);
-		colors[coordinate] = mixedColor.r;
-		colors[coordinate + 1] = mixedColor.g;
-		colors[coordinate + 2] = mixedColor.b;
-	}
-	const positionAttribute = new THREE.BufferAttribute(position, 3);
-	const colorAttribute = new THREE.BufferAttribute(colors, 3);
-	particleGeometry.setAttribute("position", positionAttribute);
-	particleGeometry.setAttribute("color", colorAttribute);
-	particleMaterial = new THREE.PointsMaterial({
-		size: particleObj.size,
-		sizeAttenuation: true,
-		depthWrite: false,
-		vertexColors: true,
-		blending: THREE.AdditiveBlending,
-	});
-	points = new THREE.Points(particleGeometry, particleMaterial);
-	scene.add(points);
-};
+const doorColorTexture = textureLoader.load("./static/textures/house/door/color.webp");
+const doorAlphaTexture = textureLoader.load("./static/textures/house/door/alpha.webp");
+const doorAmbientOcclusionTexture = textureLoader.load("./static/textures/house/door/ambientOcclusion.webp");
+const doorHeightTexture = textureLoader.load("./static/textures/house/door/height.webp");
+const doorMetalnessTexture = textureLoader.load("./static/textures/house/door/metalness.webp");
+const doorRoughnessTexture = textureLoader.load("./static/textures/house/door/roughness.webp");
+const doorNormalTexture = textureLoader.load("./static/textures/house/door/normal.webp");
 
-createGalaxy();
+const roofColorTexture = textureLoader.load(
+	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp"
+);
+const roofARMTexture = textureLoader.load("./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp");
+const roofNormalTexture = textureLoader.load(
+	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp"
+);
 
-gui.add(particleObj, "count")
-	.min(10000)
-	.max(50000)
-	.step(5000)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "size")
-	.min(0.001)
-	.max(0.5)
-	.step(0.001)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "radius")
-	.min(1)
-	.max(8)
-	.step(0.5)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "galaxyCurves")
-	.min(1)
-	.max(8)
-	.step(1)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "bendingAngle")
-	.min(-8)
-	.max(8)
-	.step(1)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "randomValue")
-	.min(0.01)
-	.max(0.5)
-	.step(0.01)
-	.onFinishChange(() => createGalaxy());
-gui.add(particleObj, "pow")
-	.min(1)
-	.max(5)
-	.step(0.5)
-	.onFinishChange(() => createGalaxy());
-gui.addColor(particleObj, "innerColor").onFinishChange(() => createGalaxy());
-gui.addColor(particleObj, "outerColor").onFinishChange(() => createGalaxy());
+const floorColorTexture = textureLoader.load(
+	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp"
+);
+const floorAlphaTexture = textureLoader.load("./static/textures/house/floor/alpha.webp");
+const floorARMTexture = textureLoader.load(
+	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp"
+);
+const floorHeightTexture = textureLoader.load(
+	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp"
+);
+const floorNormalTexture = textureLoader.load(
+	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp"
+);
+
+const graveColorTexture = textureLoader.load(
+	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp"
+);
+const graveARMTexture = textureLoader.load(
+	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp"
+);
+const graveNormalTexture = textureLoader.load(
+	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp"
+);
+
+wallColorTexture.colorSpace = THREE.SRGBColorSpace;
+doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+roofColorTexture.colorSpace = THREE.SRGBColorSpace;
+floorColorTexture.colorSpace = THREE.SRGBColorSpace;
+graveColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+roofColorTexture.repeat.set(3, 1);
+roofARMTexture.repeat.set(3, 1);
+roofNormalTexture.repeat.set(3, 1);
+roofColorTexture.wrapS = THREE.RepeatWrapping;
+roofColorTexture.wrapT = THREE.RepeatWrapping;
+roofARMTexture.wrapS = THREE.RepeatWrapping;
+roofARMTexture.wrapT = THREE.RepeatWrapping;
+roofNormalTexture.wrapS = THREE.RepeatWrapping;
+roofNormalTexture.wrapT = THREE.RepeatWrapping;
+
+floorColorTexture.repeat.set(8, 8);
+floorARMTexture.repeat.set(8, 8);
+floorNormalTexture.repeat.set(8, 8);
+floorHeightTexture.repeat.set(8, 8);
+
+floorColorTexture.wrapS = THREE.RepeatWrapping;
+floorColorTexture.wrapT = THREE.RepeatWrapping;
+floorARMTexture.wrapS = THREE.RepeatWrapping;
+floorARMTexture.wrapT = THREE.RepeatWrapping;
+floorNormalTexture.wrapS = THREE.RepeatWrapping;
+floorNormalTexture.wrapT = THREE.RepeatWrapping;
+floorHeightTexture.wrapS = THREE.RepeatWrapping;
+floorHeightTexture.wrapT = THREE.RepeatWrapping;
+
+/* 
+	TEXTURES ENDS
+*/
+
+/* 
+	FLOOR STARTS
+*/
+const floor = new THREE.Mesh(
+	new THREE.PlaneGeometry(14, 14, 100, 100),
+	new THREE.MeshStandardMaterial({
+		map: floorColorTexture,
+		aoMap: floorARMTexture,
+		metalnessMap: floorARMTexture,
+		alphaMap: floorAlphaTexture,
+		transparent: true,
+		roughnessMap: floorARMTexture,
+		normalMap: floorNormalTexture,
+		displacementMap: floorHeightTexture,
+		displacementBias: -0.1,
+		displacementScale: 0.25,
+	})
+);
+floor.rotation.x = -Math.PI * 0.5;
+scene.add(floor);
+
+/* 
+	FLOOR ENDS
+*/
+
+/* 
+	HOUSE STARTS
+*/
+const house = new THREE.Group();
+scene.add(house);
+
+// walls
+const walls = new THREE.Mesh(
+	new THREE.BoxGeometry(2, 2, 2),
+	new THREE.MeshStandardMaterial({
+		map: wallColorTexture,
+		aoMap: wallARMTexture,
+		roughnessMap: wallARMTexture,
+		metalnessMap: wallARMTexture,
+		normalMap: wallNormalTexture,
+	})
+);
+walls.position.y = 1;
+house.add(walls);
+
+// door
+const door = new THREE.Mesh(
+	new THREE.PlaneGeometry(1, 1.2, 100, 100),
+	new THREE.MeshStandardMaterial({
+		map: doorColorTexture,
+		alphaMap: doorAlphaTexture,
+		transparent: true,
+		metalnessMap: doorMetalnessTexture,
+		roughnessMap: doorRoughnessTexture,
+		aoMap: doorAmbientOcclusionTexture,
+		normalMap: doorNormalTexture,
+		displacementMap: doorHeightTexture,
+		displacementScale: 0.23,
+		displacementBias: -0.1,
+	})
+);
+door.position.y = 0.6;
+door.position.z = 1.001;
+house.add(door);
+
+// roof
+const roof = new THREE.Mesh(
+	new THREE.ConeGeometry(2, 1, 4),
+	new THREE.MeshStandardMaterial({
+		map: roofColorTexture,
+		aoMap: roofARMTexture,
+		roughnessMap: roofARMTexture,
+		metalnessMap: roofARMTexture,
+		normalMap: roofNormalTexture,
+	})
+);
+roof.position.y = 2 + 0.5;
+roof.rotation.y = Math.PI * 0.25;
+house.add(roof);
+
+/* 
+	HOUSE ENDS
+*/
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-camera.position.z = 5;
+camera.position.z = 15;
 scene.add(camera);
+
+/* 
+	GRAVES STARTS
+*/
+const graveMaterial = new THREE.MeshStandardMaterial({
+	map: graveColorTexture,
+	aoMap: graveARMTexture,
+	metalnessMap: graveARMTexture,
+	roughnessMap: graveARMTexture,
+	normalMap: graveNormalTexture,
+});
+const graves = new THREE.Group();
+scene.add(graves);
+for (let i = 0; i < 20; i++) {
+	const grave = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.2), graveMaterial);
+	grave.position.y = Math.random() * 0.3;
+	const angle = Math.random() * Math.PI * 2;
+	const random = 2 + Math.random() * 3;
+	grave.position.x = Math.sin(angle) * random;
+	grave.position.z = Math.cos(angle) * random;
+	grave.rotation.x = Math.random() * 1.2;
+	graves.add(grave);
+}
+
+/* 
+	GRAVES ENDS
+*/
+
+/* 
+	GALAXY STARTS
+*/
+
+const galaxyGenerater = () => {
+	const particlesCount = 10000;
+	const galaxyGeometry = new THREE.BufferGeometry();
+	const galaxyPosition = new Float32Array(particlesCount * 3);
+	const galaxyColors = new Float32Array(particlesCount * 3);
+	const totalLines = 3;
+	const colorOutside = new THREE.Color("purple");
+	const colorInside = new THREE.Color("red");
+	for (let i = 0; i < particlesCount; i++) {
+		const spreadPosition = Math.random() * 3;
+		const angle = ((i % totalLines) / totalLines) * Math.PI * 2;
+		const curve = spreadPosition * 2;
+
+		galaxyPosition[i * 3] =
+			Math.sin(angle + curve) * spreadPosition +
+			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //x
+		galaxyPosition[i * 3 + 1] = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //y
+		galaxyPosition[i * 3 + 2] =
+			Math.cos(angle + curve) * spreadPosition +
+			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //z
+		const mixColor = colorInside.clone();
+		mixColor.lerp(colorOutside, spreadPosition / 3);
+		galaxyColors[i * 3] = mixColor.r;
+		galaxyColors[i * 3 + 1] = mixColor.g;
+		galaxyColors[i * 3 + 2] = mixColor.b;
+	}
+	const positionAttribute = new THREE.BufferAttribute(galaxyPosition, 3);
+	const colorAttribute = new THREE.BufferAttribute(galaxyColors, 3);
+	galaxyGeometry.setAttribute("position", positionAttribute);
+	galaxyGeometry.setAttribute("color", colorAttribute);
+	const galaxyMaterial = new THREE.PointsMaterial({
+		size: 0.03,
+		sizeAttenuation: true,
+		depthWrite: false,
+		blending: THREE.AdditiveBlending,
+		vertexColors: true,
+	});
+	const galaxyParticles = new THREE.Points(galaxyGeometry, galaxyMaterial);
+	galaxyParticles.rotation.x = 2;
+	galaxyParticles.rotation.z = 2.5;
+	galaxyParticles.position.y = 10;
+	galaxyParticles.position.x = -5;
+	galaxyParticles.position.z = -10;
+	scene.add(galaxyParticles);
+};
+
+galaxyGenerater();
+
+/* 
+	GALAXY EMDS
+*/
+
+/* 
+	LIGHTS STARTS
+*/
+
+const ambientLight = new THREE.AmbientLight("#86cdff", 0.275);
+const directionalLight = new THREE.DirectionalLight("#86cdff", 1);
+directionalLight.position.x = 3;
+directionalLight.position.y = 2;
+directionalLight.position.z = -8;
+scene.add(ambientLight, directionalLight);
+
+const pointLight = new THREE.PointLight("yellow", 2);
+pointLight.position.z = 1.2;
+pointLight.position.y = 2;
+scene.add(pointLight);
+
+// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
+// scene.add(directionalLightHelper);
+
+/* 
+	LIGHTS ENDS	
+*/
+
+/* 
+	SHADOW STARTS	
+*/
+directionalLight.castShadow = true;
+
+roof.castShadow = true;
+walls.castShadow = true;
+walls.receiveShadow = true;
+floor.receiveShadow = true;
+for (const grave of graves.children) {
+	grave.castShadow = true;
+	grave.receiveShadow = true;
+}
+
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
+
+directionalLight.shadow.camera.near = 1;
+directionalLight.shadow.camera.far = 15;
+
+// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// scene.add(directionalLightCameraHelper);
+// console.log("di", directionalLight);
+
+/* 
+	SHADOW ENDS	
+*/
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
@@ -2147,12 +2648,15 @@ const renderer = new THREE.WebGLRenderer({
 	canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.render(scene, camera);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const tick = () => {
+	renderer.render(scene, camera);
 	controls.enableDamping = true;
 	controls.update();
-	renderer.render(scene, camera);
 	window.requestAnimationFrame(tick);
 };
 

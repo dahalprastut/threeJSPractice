@@ -1,9 +1,22 @@
 body {
 	margin: 0;
+	/* background: black; */
 }
 
 canvas {
 	position: fixed;
 	top: 0;
 	left: 0;
+}
+
+.section {
+	height: 100vh;
+	padding: 0 15rem;
+	display: flex;
+	align-items: center;
+	color: #fff;
+}
+
+.second-section {
+	justify-content: flex-end;
 }
