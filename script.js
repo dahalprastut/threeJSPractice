@@ -2299,120 +2299,120 @@
 
 // PORTFOLIO Completed
 
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-const sizes = {
-	width: window.innerWidth,
-	height: window.innerHeight,
-};
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
 
-window.addEventListener("dblclick", () => {
-	if (!document.fullscreenElement) {
-		canvas.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
-});
+// window.addEventListener("dblclick", () => {
+// 	if (!document.fullscreenElement) {
+// 		canvas.requestFullscreen();
+// 	} else {
+// 		document.exitFullscreen();
+// 	}
+// });
 
-window.addEventListener("resize", () => {
-	sizes.width = window.innerWidth;
-	sizes.height = window.innerHeight;
-	camera.aspect = sizes.width / sizes.height;
-	camera.updateProjectionMatrix();
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-	renderer.setSize(sizes.width, sizes.height);
-});
+// window.addEventListener("resize", () => {
+// 	sizes.width = window.innerWidth;
+// 	sizes.height = window.innerHeight;
+// 	camera.aspect = sizes.width / sizes.height;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// 	renderer.setSize(sizes.width, sizes.height);
+// });
 
-const canvas = document.querySelector("canvas.webgl");
+// const canvas = document.querySelector("canvas.webgl");
 
-const scene = new THREE.Scene();
+// const scene = new THREE.Scene();
 
-/* 
-	TEXTURES STARTS
-*/
+// /*
+// 	TEXTURES STARTS
+// */
 
-const textureLoader = new THREE.TextureLoader();
+// const textureLoader = new THREE.TextureLoader();
 
-const wallColorTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp"
-);
-const wallARMTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp"
-);
-const wallNormalTexture = textureLoader.load(
-	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp"
-);
+// const wallColorTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp"
+// );
+// const wallARMTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp"
+// );
+// const wallNormalTexture = textureLoader.load(
+// 	"./static/textures/house/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp"
+// );
 
-const doorColorTexture = textureLoader.load("./static/textures/house/door/color.webp");
-const doorAlphaTexture = textureLoader.load("./static/textures/house/door/alpha.webp");
-const doorAmbientOcclusionTexture = textureLoader.load("./static/textures/house/door/ambientOcclusion.webp");
-const doorHeightTexture = textureLoader.load("./static/textures/house/door/height.webp");
-const doorMetalnessTexture = textureLoader.load("./static/textures/house/door/metalness.webp");
-const doorRoughnessTexture = textureLoader.load("./static/textures/house/door/roughness.webp");
-const doorNormalTexture = textureLoader.load("./static/textures/house/door/normal.webp");
+// const doorColorTexture = textureLoader.load("./static/textures/house/door/color.webp");
+// const doorAlphaTexture = textureLoader.load("./static/textures/house/door/alpha.webp");
+// const doorAmbientOcclusionTexture = textureLoader.load("./static/textures/house/door/ambientOcclusion.webp");
+// const doorHeightTexture = textureLoader.load("./static/textures/house/door/height.webp");
+// const doorMetalnessTexture = textureLoader.load("./static/textures/house/door/metalness.webp");
+// const doorRoughnessTexture = textureLoader.load("./static/textures/house/door/roughness.webp");
+// const doorNormalTexture = textureLoader.load("./static/textures/house/door/normal.webp");
 
-const roofColorTexture = textureLoader.load(
-	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp"
-);
-const roofARMTexture = textureLoader.load("./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp");
-const roofNormalTexture = textureLoader.load(
-	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp"
-);
+// const roofColorTexture = textureLoader.load(
+// 	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp"
+// );
+// const roofARMTexture = textureLoader.load("./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp");
+// const roofNormalTexture = textureLoader.load(
+// 	"./static/textures/house/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp"
+// );
 
-const floorColorTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp"
-);
-const floorAlphaTexture = textureLoader.load("./static/textures/house/floor/alpha.webp");
-const floorARMTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp"
-);
-const floorHeightTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp"
-);
-const floorNormalTexture = textureLoader.load(
-	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp"
-);
+// const floorColorTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp"
+// );
+// const floorAlphaTexture = textureLoader.load("./static/textures/house/floor/alpha.webp");
+// const floorARMTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp"
+// );
+// const floorHeightTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp"
+// );
+// const floorNormalTexture = textureLoader.load(
+// 	"./static/textures/house/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp"
+// );
 
-const graveColorTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp"
-);
-const graveARMTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp"
-);
-const graveNormalTexture = textureLoader.load(
-	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp"
-);
+// const graveColorTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp"
+// );
+// const graveARMTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp"
+// );
+// const graveNormalTexture = textureLoader.load(
+// 	"./static/textures/house/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp"
+// );
 
-wallColorTexture.colorSpace = THREE.SRGBColorSpace;
-doorColorTexture.colorSpace = THREE.SRGBColorSpace;
-roofColorTexture.colorSpace = THREE.SRGBColorSpace;
-floorColorTexture.colorSpace = THREE.SRGBColorSpace;
-graveColorTexture.colorSpace = THREE.SRGBColorSpace;
+// wallColorTexture.colorSpace = THREE.SRGBColorSpace;
+// doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+// roofColorTexture.colorSpace = THREE.SRGBColorSpace;
+// floorColorTexture.colorSpace = THREE.SRGBColorSpace;
+// graveColorTexture.colorSpace = THREE.SRGBColorSpace;
 
-roofColorTexture.repeat.set(3, 1);
-roofARMTexture.repeat.set(3, 1);
-roofNormalTexture.repeat.set(3, 1);
-roofColorTexture.wrapS = THREE.RepeatWrapping;
-roofColorTexture.wrapT = THREE.RepeatWrapping;
-roofARMTexture.wrapS = THREE.RepeatWrapping;
-roofARMTexture.wrapT = THREE.RepeatWrapping;
-roofNormalTexture.wrapS = THREE.RepeatWrapping;
-roofNormalTexture.wrapT = THREE.RepeatWrapping;
+// roofColorTexture.repeat.set(3, 1);
+// roofARMTexture.repeat.set(3, 1);
+// roofNormalTexture.repeat.set(3, 1);
+// roofColorTexture.wrapS = THREE.RepeatWrapping;
+// roofColorTexture.wrapT = THREE.RepeatWrapping;
+// roofARMTexture.wrapS = THREE.RepeatWrapping;
+// roofARMTexture.wrapT = THREE.RepeatWrapping;
+// roofNormalTexture.wrapS = THREE.RepeatWrapping;
+// roofNormalTexture.wrapT = THREE.RepeatWrapping;
 
-floorColorTexture.repeat.set(8, 8);
-floorARMTexture.repeat.set(8, 8);
-floorNormalTexture.repeat.set(8, 8);
-floorHeightTexture.repeat.set(8, 8);
+// floorColorTexture.repeat.set(8, 8);
+// floorARMTexture.repeat.set(8, 8);
+// floorNormalTexture.repeat.set(8, 8);
+// floorHeightTexture.repeat.set(8, 8);
 
-floorColorTexture.wrapS = THREE.RepeatWrapping;
-floorColorTexture.wrapT = THREE.RepeatWrapping;
-floorARMTexture.wrapS = THREE.RepeatWrapping;
-floorARMTexture.wrapT = THREE.RepeatWrapping;
-floorNormalTexture.wrapS = THREE.RepeatWrapping;
-floorNormalTexture.wrapT = THREE.RepeatWrapping;
-floorHeightTexture.wrapS = THREE.RepeatWrapping;
-floorHeightTexture.wrapT = THREE.RepeatWrapping;
+// floorColorTexture.wrapS = THREE.RepeatWrapping;
+// floorColorTexture.wrapT = THREE.RepeatWrapping;
+// floorARMTexture.wrapS = THREE.RepeatWrapping;
+// floorARMTexture.wrapT = THREE.RepeatWrapping;
+// floorNormalTexture.wrapS = THREE.RepeatWrapping;
+// floorNormalTexture.wrapT = THREE.RepeatWrapping;
+// floorHeightTexture.wrapS = THREE.RepeatWrapping;
+// floorHeightTexture.wrapT = THREE.RepeatWrapping;
 
 /* 
 	TEXTURES ENDS
@@ -2421,242 +2421,1694 @@ floorHeightTexture.wrapT = THREE.RepeatWrapping;
 /* 
 	FLOOR STARTS
 */
-const floor = new THREE.Mesh(
-	new THREE.PlaneGeometry(14, 14, 100, 100),
-	new THREE.MeshStandardMaterial({
-		map: floorColorTexture,
-		aoMap: floorARMTexture,
-		metalnessMap: floorARMTexture,
-		alphaMap: floorAlphaTexture,
-		transparent: true,
-		roughnessMap: floorARMTexture,
-		normalMap: floorNormalTexture,
-		displacementMap: floorHeightTexture,
-		displacementBias: -0.1,
-		displacementScale: 0.25,
-	})
-);
-floor.rotation.x = -Math.PI * 0.5;
-scene.add(floor);
+// const floor = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(14, 14, 100, 100),
+// 	new THREE.MeshStandardMaterial({
+// 		map: floorColorTexture,
+// 		aoMap: floorARMTexture,
+// 		metalnessMap: floorARMTexture,
+// 		alphaMap: floorAlphaTexture,
+// 		transparent: true,
+// 		roughnessMap: floorARMTexture,
+// 		normalMap: floorNormalTexture,
+// 		displacementMap: floorHeightTexture,
+// 		displacementBias: -0.1,
+// 		displacementScale: 0.25,
+// 	})
+// );
+// floor.rotation.x = -Math.PI * 0.5;
+// scene.add(floor);
+
+// /*
+// 	FLOOR ENDS
+// */
+
+// /*
+// 	HOUSE STARTS
+// */
+// const house = new THREE.Group();
+// scene.add(house);
+
+// // walls
+// const walls = new THREE.Mesh(
+// 	new THREE.BoxGeometry(2, 2, 2),
+// 	new THREE.MeshStandardMaterial({
+// 		map: wallColorTexture,
+// 		aoMap: wallARMTexture,
+// 		roughnessMap: wallARMTexture,
+// 		metalnessMap: wallARMTexture,
+// 		normalMap: wallNormalTexture,
+// 	})
+// );
+// walls.position.y = 1;
+// house.add(walls);
+
+// // door
+// const door = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(1, 1.2, 100, 100),
+// 	new THREE.MeshStandardMaterial({
+// 		map: doorColorTexture,
+// 		alphaMap: doorAlphaTexture,
+// 		transparent: true,
+// 		metalnessMap: doorMetalnessTexture,
+// 		roughnessMap: doorRoughnessTexture,
+// 		aoMap: doorAmbientOcclusionTexture,
+// 		normalMap: doorNormalTexture,
+// 		displacementMap: doorHeightTexture,
+// 		displacementScale: 0.23,
+// 		displacementBias: -0.1,
+// 	})
+// );
+// door.position.y = 0.6;
+// door.position.z = 1.001;
+// house.add(door);
+
+// // roof
+// const roof = new THREE.Mesh(
+// 	new THREE.ConeGeometry(2, 1, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		map: roofColorTexture,
+// 		aoMap: roofARMTexture,
+// 		roughnessMap: roofARMTexture,
+// 		metalnessMap: roofARMTexture,
+// 		normalMap: roofNormalTexture,
+// 	})
+// );
+// roof.position.y = 2 + 0.5;
+// roof.rotation.y = Math.PI * 0.25;
+// house.add(roof);
+
+// /*
+// 	HOUSE ENDS
+// */
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 15;
+// scene.add(camera);
+
+// /*
+// 	GRAVES STARTS
+// */
+// const graveMaterial = new THREE.MeshStandardMaterial({
+// 	map: graveColorTexture,
+// 	aoMap: graveARMTexture,
+// 	metalnessMap: graveARMTexture,
+// 	roughnessMap: graveARMTexture,
+// 	normalMap: graveNormalTexture,
+// });
+// const graves = new THREE.Group();
+// scene.add(graves);
+// for (let i = 0; i < 20; i++) {
+// 	const grave = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.2), graveMaterial);
+// 	grave.position.y = Math.random() * 0.3;
+// 	const angle = Math.random() * Math.PI * 2;
+// 	const random = 2 + Math.random() * 3;
+// 	grave.position.x = Math.sin(angle) * random;
+// 	grave.position.z = Math.cos(angle) * random;
+// 	grave.rotation.x = Math.random() * 1.2;
+// 	graves.add(grave);
+// }
+
+// /*
+// 	GRAVES ENDS
+// */
+
+// /*
+// 	GALAXY STARTS
+// */
+
+// const galaxyGenerater = () => {
+// 	const particlesCount = 10000;
+// 	const galaxyGeometry = new THREE.BufferGeometry();
+// 	const galaxyPosition = new Float32Array(particlesCount * 3);
+// 	const galaxyColors = new Float32Array(particlesCount * 3);
+// 	const totalLines = 3;
+// 	const colorOutside = new THREE.Color("purple");
+// 	const colorInside = new THREE.Color("red");
+// 	for (let i = 0; i < particlesCount; i++) {
+// 		const spreadPosition = Math.random() * 3;
+// 		const angle = ((i % totalLines) / totalLines) * Math.PI * 2;
+// 		const curve = spreadPosition * 2;
+
+// 		galaxyPosition[i * 3] =
+// 			Math.sin(angle + curve) * spreadPosition +
+// 			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //x
+// 		galaxyPosition[i * 3 + 1] = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //y
+// 		galaxyPosition[i * 3 + 2] =
+// 			Math.cos(angle + curve) * spreadPosition +
+// 			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //z
+// 		const mixColor = colorInside.clone();
+// 		mixColor.lerp(colorOutside, spreadPosition / 3);
+// 		galaxyColors[i * 3] = mixColor.r;
+// 		galaxyColors[i * 3 + 1] = mixColor.g;
+// 		galaxyColors[i * 3 + 2] = mixColor.b;
+// 	}
+// 	const positionAttribute = new THREE.BufferAttribute(galaxyPosition, 3);
+// 	const colorAttribute = new THREE.BufferAttribute(galaxyColors, 3);
+// 	galaxyGeometry.setAttribute("position", positionAttribute);
+// 	galaxyGeometry.setAttribute("color", colorAttribute);
+// 	const galaxyMaterial = new THREE.PointsMaterial({
+// 		size: 0.03,
+// 		sizeAttenuation: true,
+// 		depthWrite: false,
+// 		blending: THREE.AdditiveBlending,
+// 		vertexColors: true,
+// 	});
+// 	const galaxyParticles = new THREE.Points(galaxyGeometry, galaxyMaterial);
+// 	galaxyParticles.rotation.x = 2;
+// 	galaxyParticles.rotation.z = 2.5;
+// 	galaxyParticles.position.y = 10;
+// 	galaxyParticles.position.x = -5;
+// 	galaxyParticles.position.z = -10;
+// 	scene.add(galaxyParticles);
+// };
+
+// galaxyGenerater();
+
+// /*
+// 	GALAXY EMDS
+// */
+
+// /*
+// 	LIGHTS STARTS
+// */
+
+// const ambientLight = new THREE.AmbientLight("#86cdff", 0.275);
+// const directionalLight = new THREE.DirectionalLight("#86cdff", 1);
+// directionalLight.position.x = 3;
+// directionalLight.position.y = 2;
+// directionalLight.position.z = -8;
+// scene.add(ambientLight, directionalLight);
+
+// const pointLight = new THREE.PointLight("yellow", 2);
+// pointLight.position.z = 1.2;
+// pointLight.position.y = 2;
+// scene.add(pointLight);
+
+// // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
+// // scene.add(directionalLightHelper);
+
+// /*
+// 	LIGHTS ENDS
+// */
+
+// /*
+// 	SHADOW STARTS
+// */
+// directionalLight.castShadow = true;
+
+// roof.castShadow = true;
+// walls.castShadow = true;
+// walls.receiveShadow = true;
+// floor.receiveShadow = true;
+// for (const grave of graves.children) {
+// 	grave.castShadow = true;
+// 	grave.receiveShadow = true;
+// }
+
+// directionalLight.shadow.mapSize.width = 1024;
+// directionalLight.shadow.mapSize.height = 1024;
+
+// directionalLight.shadow.camera.near = 1;
+// directionalLight.shadow.camera.far = 15;
+
+// // const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// // scene.add(directionalLightCameraHelper);
+// // console.log("di", directionalLight);
+
+// /*
+// 	SHADOW ENDS
+// */
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.render(scene, camera);
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	controls.enableDamping = true;
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
 
 /* 
-	FLOOR ENDS
+	PHYSICS
 */
 
-/* 
-	HOUSE STARTS
-*/
-const house = new THREE.Group();
-scene.add(house);
+// import * as THREE from "three";
+// import CANNON from "cannon";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { metalness } from "three/examples/jsm/nodes/Nodes.js";
 
-// walls
-const walls = new THREE.Mesh(
-	new THREE.BoxGeometry(2, 2, 2),
-	new THREE.MeshStandardMaterial({
-		map: wallColorTexture,
-		aoMap: wallARMTexture,
-		roughnessMap: wallARMTexture,
-		metalnessMap: wallARMTexture,
-		normalMap: wallNormalTexture,
-	})
-);
-walls.position.y = 1;
-house.add(walls);
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
 
-// door
-const door = new THREE.Mesh(
-	new THREE.PlaneGeometry(1, 1.2, 100, 100),
-	new THREE.MeshStandardMaterial({
-		map: doorColorTexture,
-		alphaMap: doorAlphaTexture,
-		transparent: true,
-		metalnessMap: doorMetalnessTexture,
-		roughnessMap: doorRoughnessTexture,
-		aoMap: doorAmbientOcclusionTexture,
-		normalMap: doorNormalTexture,
-		displacementMap: doorHeightTexture,
-		displacementScale: 0.23,
-		displacementBias: -0.1,
-	})
-);
-door.position.y = 0.6;
-door.position.z = 1.001;
-house.add(door);
+// const objectsToUpdate = [];
+// const canvas = document.querySelector("canvas.webgl");
 
-// roof
-const roof = new THREE.Mesh(
-	new THREE.ConeGeometry(2, 1, 4),
-	new THREE.MeshStandardMaterial({
-		map: roofColorTexture,
-		aoMap: roofARMTexture,
-		roughnessMap: roofARMTexture,
-		metalnessMap: roofARMTexture,
-		normalMap: roofNormalTexture,
-	})
-);
-roof.position.y = 2 + 0.5;
-roof.rotation.y = Math.PI * 0.25;
-house.add(roof);
+// const scene = new THREE.Scene();
 
-/* 
-	HOUSE ENDS
-*/
+// const world = new CANNON.World();
+// console.log("worl", world);
+// world.boardphase = new CANNON.SAPBroadphase(world);
+// world.allowSleep = true;
+// world.gravity.set(0, -9.82, 0);
 
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-camera.position.z = 15;
-scene.add(camera);
+// // Materials
 
-/* 
-	GRAVES STARTS
-*/
-const graveMaterial = new THREE.MeshStandardMaterial({
-	map: graveColorTexture,
-	aoMap: graveARMTexture,
-	metalnessMap: graveARMTexture,
-	roughnessMap: graveARMTexture,
-	normalMap: graveNormalTexture,
-});
-const graves = new THREE.Group();
-scene.add(graves);
-for (let i = 0; i < 20; i++) {
-	const grave = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.2), graveMaterial);
-	grave.position.y = Math.random() * 0.3;
-	const angle = Math.random() * Math.PI * 2;
-	const random = 2 + Math.random() * 3;
-	grave.position.x = Math.sin(angle) * random;
-	grave.position.z = Math.cos(angle) * random;
-	grave.rotation.x = Math.random() * 1.2;
-	graves.add(grave);
-}
+// const concreteMaterial = new CANNON.Material("concrete");
+// const plasticMaterial = new CANNON.Material("plastic");
 
-/* 
-	GRAVES ENDS
-*/
+// const concretePlasticContactMaterial = new CANNON.ContactMaterial(concreteMaterial, plasticMaterial, {
+// 	friction: 0.1,
+// 	restitution: 0.7,
+// });
+// world.addContactMaterial(concretePlasticContactMaterial);
 
-/* 
-	GALAXY STARTS
-*/
+// const floorShape = new CANNON.Plane();
+// const floorBody = new CANNON.Body({
+// 	mass: 0,
+// 	material: concreteMaterial,
+// 	shape: floorShape,
+// });
 
-const galaxyGenerater = () => {
-	const particlesCount = 10000;
-	const galaxyGeometry = new THREE.BufferGeometry();
-	const galaxyPosition = new Float32Array(particlesCount * 3);
-	const galaxyColors = new Float32Array(particlesCount * 3);
-	const totalLines = 3;
-	const colorOutside = new THREE.Color("purple");
-	const colorInside = new THREE.Color("red");
-	for (let i = 0; i < particlesCount; i++) {
-		const spreadPosition = Math.random() * 3;
-		const angle = ((i % totalLines) / totalLines) * Math.PI * 2;
-		const curve = spreadPosition * 2;
+// floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI * -0.5);
 
-		galaxyPosition[i * 3] =
-			Math.sin(angle + curve) * spreadPosition +
-			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //x
-		galaxyPosition[i * 3 + 1] = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //y
-		galaxyPosition[i * 3 + 2] =
-			Math.cos(angle + curve) * spreadPosition +
-			Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4; //z
-		const mixColor = colorInside.clone();
-		mixColor.lerp(colorOutside, spreadPosition / 3);
-		galaxyColors[i * 3] = mixColor.r;
-		galaxyColors[i * 3 + 1] = mixColor.g;
-		galaxyColors[i * 3 + 2] = mixColor.b;
-	}
-	const positionAttribute = new THREE.BufferAttribute(galaxyPosition, 3);
-	const colorAttribute = new THREE.BufferAttribute(galaxyColors, 3);
-	galaxyGeometry.setAttribute("position", positionAttribute);
-	galaxyGeometry.setAttribute("color", colorAttribute);
-	const galaxyMaterial = new THREE.PointsMaterial({
-		size: 0.03,
-		sizeAttenuation: true,
-		depthWrite: false,
-		blending: THREE.AdditiveBlending,
-		vertexColors: true,
-	});
-	const galaxyParticles = new THREE.Points(galaxyGeometry, galaxyMaterial);
-	galaxyParticles.rotation.x = 2;
-	galaxyParticles.rotation.z = 2.5;
-	galaxyParticles.position.y = 10;
-	galaxyParticles.position.x = -5;
-	galaxyParticles.position.z = -10;
-	scene.add(galaxyParticles);
+// world.addBody(floorBody);
+
+// const floorMaterial = new THREE.MeshStandardMaterial({
+// 	color: "gray",
+// });
+
+// const floor = new THREE.Mesh(new THREE.PlaneGeometry(23, 23), floorMaterial);
+// floor.receiveShadow = true;
+// floor.rotation.x = -Math.PI * 0.5;
+
+// scene.add(floor);
+
+// const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+// const sphereMaterial = new THREE.MeshStandardMaterial({
+// 	color: "yellow",
+// });
+// sphereMaterial.metalness = 0.5;
+// sphereMaterial.roughness = 1;
+
+// const createSphere = (radius, position, mass) => {
+// 	// physics
+// 	const shape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		mass,
+// 		shape,
+// 		material: plasticMaterial,
+// 	});
+// 	body.position.copy(position);
+// 	world.addBody(body);
+
+// 	const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+// 	mesh.scale.set(radius, radius, radius);
+// 	mesh.position.copy(position);
+// 	mesh.castShadow = true;
+
+// 	scene.add(mesh);
+
+// 	objectsToUpdate.push({ body, mesh });
+// };
+
+// const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+// const boxMaterial = new THREE.MeshStandardMaterial({
+// 	color: "pink",
+// });
+
+// const createBoxes = (size, position) => {
+// 	// Physics
+// 	const shape = new CANNON.Box(new CANNON.Vec3(size * 0.5, size * 0.5, size * 0.5));
+// 	const body = new CANNON.Body({
+// 		shape,
+// 		mass: 1,
+// 		position,
+// 		material: concreteMaterial,
+// 	});
+// 	// body.position.copy(position);
+// 	world.addBody(body);
+
+// 	const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+// 	mesh.castShadow = true;
+// 	mesh.scale.set(size, size, size);
+// 	scene.add(mesh);
+// 	objectsToUpdate.push({ body, mesh });
+// };
+
+// createSphere(0.2, { x: 0, y: 1, z: 0 }, 1);
+// createSphere(0.1, { x: 1, y: 1, z: 0 }, 0.5);
+// createSphere(0.3, { x: 1.5, y: 0.5, z: 0 }, 2);
+// createSphere(0.3, { x: 2.5, y: 0.5, z: 0 }, 3);
+
+// createBoxes(1, { x: -2, y: 1, z: 1 });
+// createBoxes(0.5, { x: -2, y: 4, z: 1 });
+// const ambientLight = new THREE.AmbientLight("#fff", 1.2);
+// const directionalLight = new THREE.DirectionalLight("#fff", 1.5);
+// directionalLight.position.y = 2;
+// directionalLight.position.x = 1;
+// directionalLight.castShadow = true;
+// scene.add(ambientLight, directionalLight);
+// console.log("obj", objectsToUpdate);
+
+// // const pointLightCameraHelper = new THREE.CameraHelper(pointLight.shadow.camera);
+// // scene.add(pointLightCameraHelper);
+// // const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
+// // scene.add(pointLightHelper);
+// // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2);
+// // scene.add(directionalLightHelper);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// camera.position.y = 2;
+// scene.add(camera);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFShadowMap;
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+
+// const tick = () => {
+// 	controls.update();
+// 	timer.update();
+// 	const delta = timer.getDelta();
+// 	world.step(1 / 60, delta, 3);
+// 	// sphereBody.applyLocalForce(new CANNON.Vec3(, 0, 0), new CANNON.Vec3(0, 0, 0));
+// 	objectsToUpdate.forEach((el) => {
+// 		// el.body.applyForce(new CANNON.Vec3(0.5, 0, 0), el.body.position);
+// 		el.body.applyForce(new CANNON.Vec3(0.5, 0, 0), el.body.position);
+// 		el.mesh.position.x = el.body.position.x;
+// 		el.mesh.position.y = el.body.position.y;
+// 		el.mesh.position.z = el.body.position.z;
+// 		el.mesh.quaternion.copy(el.body.quaternion);
+// 	});
+
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Physics again
+
+// import * as THREE from "three";
+// import * as CANNON from "cannon";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const physicsArr = [];
+
+// const scene = new THREE.Scene();
+
+// const world = new CANNON.World();
+// world.gravity.set(0, -9.8, 0);
+// world.boradphase = new CANNON.SAPBroadphase(world);
+// world.allowSleep = true;
+
+// const concreteMaterial = new CANNON.Material("concrete");
+// const plasticMaterial = new CANNON.Material("plastic");
+
+// const concretePlasticContactMaterial = new CANNON.ContactMaterial(concreteMaterial, plasticMaterial, {
+// 	friction: 0.2,
+// 	restitution: 0.7,
+// });
+// world.addContactMaterial(concretePlasticContactMaterial);
+
+// const floor = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(20, 20),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+
+// floor.rotation.x = -Math.PI * 0.5;
+// floor.receiveShadow = true;
+
+// scene.add(floor);
+
+// // physics
+
+// const floorShape = new CANNON.Plane();
+// const floorBody = new CANNON.Body({
+// 	mass: 0,
+// 	material: concreteMaterial,
+// });
+// floorBody.addShape(floorShape);
+// floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+// world.addBody(floorBody);
+
+// const createBall = (radius, position) => {
+// 	// UI
+// 	const mesh = new THREE.Mesh(
+// 		new THREE.SphereGeometry(radius),
+// 		new THREE.MeshStandardMaterial({
+// 			color: "yellow",
+// 		})
+// 	);
+// 	mesh.position.copy(position);
+// 	mesh.castShadow = true;
+// 	scene.add(mesh);
+// 	// Physics
+// 	const shape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		mass: 1,
+// 		position,
+// 		material: plasticMaterial,
+// 	});
+// 	body.addShape(shape);
+// 	world.add(body);
+// 	physicsArr.push({
+// 		mesh,
+// 		body,
+// 	});
+// };
+
+// createBall(1, { x: 0, y: 2, z: 0 });
+
+// // light
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// const directionalLight = new THREE.DirectionalLight("#fff", 1);
+// directionalLight.position.y = 10;
+// directionalLight.position.x = 10;
+// directionalLight.castShadow = true;
+// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
+// directionalLight.shadow.camera.far = 35;
+// directionalLight.shadow.camera.bottom = -10;
+// directionalLight.shadow.camera.top = 10;
+// directionalLight.shadow.camera.left = -10;
+// directionalLight.shadow.camera.right = 10;
+// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+
+// scene.add(ambientLight, directionalLight);
+// // scene.add(directionalLightHelper);
+// // scene.add(directionalLightCameraHelper);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 14;
+// camera.position.y = 6;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.shadowMap.enabled = true;
+
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// const tick = () => {
+// 	timer.update();
+// 	world.step(1 / 60, timer.getDelta(), 3);
+// 	physicsArr.forEach((el) => {
+// 		// el.body.applyForce(new CANNON.Vec3(2, 0, 0), new CANNON.Vec3(100, 0, 0));
+// 		el.mesh.position.copy(el.body.position);
+// 	});
+// 	renderer.render(scene, camera);
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Importing models
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// const gltfLoader = new GLTFLoader();
+// const dracoLoader = new DRACOLoader();
+// dracoLoader.setDecoderPath("./static/draco/");
+// gltfLoader.setDRACOLoader(dracoLoader);
+
+// let mixer = null;
+// gltfLoader.load("/static/models/Fox/glTF/Fox.gltf", (gltf) => {
+// 	console.log("gkf", gltf);
+// 	gltf.scene.scale.set(0.015, 0.015, 0.015);
+// 	mixer = new THREE.AnimationMixer(gltf.scene);
+// 	const action = mixer.clipAction(gltf.animations[2]);
+// 	action.play();
+// 	console.log("mix", mixer);
+// 	// const action = mixer.clipAction
+// 	scene.add(gltf.scene);
+// });
+
+// const geometry = new THREE.PlaneGeometry(4, 4);
+// const material = new THREE.MeshStandardMaterial({
+// 	color: "#ccc",
+// });
+// const plane = new THREE.Mesh(geometry, material);
+// plane.rotation.x = -Math.PI * 0.5;
+// scene.add(plane);
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// camera.position.y = 2;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// const tick = () => {
+// 	controls.update();
+// 	const delta = timer.getDelta();
+// 	if (mixer) {
+// 		mixer.update(delta);
+// 	}
+// 	timer.update();
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Physics
+
+// import * as THREE from "three";
+// import CANNON from "cannon";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+// const objectsToUpdate = [];
+
+// const world = new CANNON.World();
+// world.gravity.set(0, -9.8, 0);
+
+// const concreteMaterial = new CANNON.Material("concrete");
+// const plasticMaterial = new CANNON.Material("plastic");
+
+// const concretePlasticContactMaterial = new CANNON.ContactMaterial(concreteMaterial, plasticMaterial, {
+// 	restitution: 0.7,
+// });
+// world.addContactMaterial(concretePlasticContactMaterial);
+
+// const scene = new THREE.Scene();
+
+// const geometry = new THREE.PlaneGeometry(4, 4);
+// const material = new THREE.MeshStandardMaterial({
+// 	color: "#ccc",
+// });
+
+// const plane = new THREE.Mesh(geometry, material);
+// plane.rotation.x = -Math.PI * 0.5;
+
+// const planeShape = new CANNON.Plane();
+// const planeBody = new CANNON.Body({
+// 	mass: 0,
+// 	position: plane.position,
+// 	shape: planeShape,
+// 	material: concreteMaterial,
+// });
+// planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+// world.addBody(planeBody);
+
+// scene.add(plane);
+
+// const addBall = (position, radius) => {
+// 	const geometry = new THREE.SphereGeometry(radius);
+// 	const material = new THREE.MeshStandardMaterial({
+// 		color: "red",
+// 	});
+// 	const mesh = new THREE.Mesh(geometry, material);
+// 	mesh.position.copy(position);
+// 	scene.add(mesh);
+// 	const sphereShape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		mass: 1,
+// 		position: mesh.position,
+// 		shape: sphereShape,
+// 		material: plasticMaterial,
+// 	});
+// 	objectsToUpdate.push({
+// 		mesh,
+// 		body,
+// 	});
+// 	world.addBody(body);
+// };
+
+// addBall({ x: 0, y: 1, z: 0 }, 0.4);
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// camera.position.y = 4;
+// camera.lookAt(plane.position);
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+// const render = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// render.setSize(sizes.width, sizes.height);
+// render.render(scene, camera);
+
+// const timer = new Timer();
+
+// const tick = () => {
+// 	render.render(scene, camera);
+// 	controls.update();
+// 	timer.update();
+// 	const deltaTime = timer.getDelta();
+// 	world.step(1 / 60, deltaTime, 3);
+// 	for (let i = 0; i < objectsToUpdate.length; i++) {
+// 		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
+// 	}
+
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// import * as THREE from "three";
+// import CANNON from "cannon";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+// const objectsToUpdate = [];
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const world = new CANNON.World();
+// world.gravity.set(0, -9.8, 0);
+
+// const scene = new THREE.Scene();
+
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+// plane.rotation.x = -(Math.PI * 0.5);
+
+// scene.add(plane);
+
+// const planeShape = new CANNON.Plane();
+// const planeBody = new CANNON.Body({
+// 	shape: planeShape,
+// 	position: plane.position,
+// 	mass: 0,
+// });
+
+// planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+
+// world.addBody(planeBody);
+
+// const addSphere = (radius, position) => {
+// 	const mesh = new THREE.Mesh(
+// 		new THREE.SphereGeometry(radius),
+// 		new THREE.MeshStandardMaterial({
+// 			color: "red",
+// 		})
+// 	);
+// 	mesh.position.copy(position);
+
+// 	scene.add(mesh);
+
+// 	const sphereShape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		shape: sphereShape,
+// 		mass: 1,
+// 		position: mesh.position,
+// 	});
+// 	world.addBody(body);
+// 	objectsToUpdate.push({
+// 		mesh,
+// 		body,
+// 	});
+// };
+
+// addSphere(0.5, { x: 0, y: 1, z: 0 });
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// camera.position.y = 1;
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// scene.add(camera);
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+
+// const tick = () => {
+// 	const delta = timer.getDelta();
+// 	timer.update();
+// 	world.step(1 / 60, delta, 3);
+// 	for (let i = 0; i < objectsToUpdate.length; i++) {
+// 		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
+// 	}
+// 	renderer.render(scene, camera);
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+// tick();
+// import * as THREE from "three";
+// import CANNON from "cannon";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+// const objectsToUpdate = [];
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// const world = new CANNON.World();
+// world.gravity.set(0, -9.8, 0);
+
+// const plasticMaterial = new CANNON.Material("plastic");
+// const concreteMaterial = new CANNON.Material("concrete");
+
+// const concretePlasticContactMaterial = new CANNON.ContactMaterial(concreteMaterial, plasticMaterial, {
+// 	restitution: 0.7,
+// });
+// console.log("wo", world);
+// world.addContactMaterial(concretePlasticContactMaterial);
+
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+
+// plane.rotation.x = -Math.PI * 0.5;
+
+// scene.add(plane);
+
+// const planeShape = new CANNON.Plane();
+// const planeBody = new CANNON.Body({
+// 	position: plane.position,
+// 	mass: 0,
+// 	shape: planeShape,
+// 	material: concreteMaterial,
+// });
+// planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+// world.addBody(planeBody);
+
+// const addSphere = (position, radius) => {
+// 	const mesh = new THREE.Mesh(
+// 		new THREE.SphereGeometry(radius),
+// 		new THREE.MeshStandardMaterial({
+// 			color: "red",
+// 		})
+// 	);
+
+// 	mesh.position.copy(position);
+// 	scene.add(mesh);
+
+// 	const sphereShape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		position: mesh.position,
+// 		mass: 1,
+// 		shape: sphereShape,
+// 		material: plasticMaterial,
+// 	});
+// 	world.addBody(body);
+// 	objectsToUpdate.push({
+// 		mesh,
+// 		body,
+// 	});
+// };
+
+// addSphere({ x: 0, y: 1, z: 0 }, 0.4);
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 5;
+// camera.position.y = 2;
+
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+// const tick = () => {
+// 	controls.update();
+// 	const delta = timer.getDelta();
+// 	timer.update();
+// 	world.step(1 / 60, delta, 3);
+// 	for (let i = 0; i < objectsToUpdate.length; i++) {
+// 		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
+// 	}
+// 	renderer.render(scene, camera);
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+//  Particles
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+// plane.rotation.x = -Math.PI * 0.5;
+// scene.add(plane);
+
+// let pointsGeometry = null;
+// let pointsMaterial = null;
+// let points = null;
+
+// const galaxyGenerator = () => {
+// 	if (points !== null) {
+// 		pointsGeometry.despose();
+// 		pointsMaterial.dispose();
+// 		scene.remove(points);
+// 	}
+// 	const count = 5000;
+// 	const positionArr = new Float32Array(count * 3);
+// 	for (let i = 0; i < count; i++) {
+// 		const j = i * 3;
+// 		const radius = Math.random() * 5;
+// 		const numberOfBranches = 3;
+// 		const spin = 1;
+// 		const branchAngle = ((i % 3) / numberOfBranches) * Math.PI * 2;
+// 		const spinAngle = radius * spin;
+// 		const spreadX = Math.pow(Math.random(), 3) * (Math.random() > 0.5 ? 1 : -1) * 0.4;
+// 		const spreadY = Math.pow(Math.random(), 3) * (Math.random() > 0.5 ? 1 : -1) * 0.4;
+// 		const spreadZ = Math.pow(Math.random(), 3) * (Math.random() > 0.5 ? 1 : -1) * 0.4;
+
+// 		positionArr[j] = Math.sin(branchAngle + spinAngle) * radius + spreadX;
+// 		positionArr[j + 1] = 2 + spreadY;
+// 		positionArr[j + 2] = Math.cos(branchAngle + spinAngle) * radius + spreadZ;
+// 	}
+
+// 	const positionAttribute = new THREE.BufferAttribute(positionArr, 3);
+// 	pointsGeometry = new THREE.BufferGeometry();
+// 	pointsGeometry.setAttribute("position", positionAttribute);
+// 	pointsMaterial = new THREE.PointsMaterial({
+// 		size: 0.08,
+// 		color: "red",
+// 		sizeAttenuation: true,
+// 	});
+// 	points = new THREE.Points(pointsGeometry, pointsMaterial);
+
+// 	scene.add(points);
+// };
+
+// const galaxyGenerator = () => {
+// 	const count = 10000;
+// 	const positionArr = new Float32Array(count * 3);
+// 	const colorArr = new Float32Array(count * 3);
+// 	const numberOfBranches = 3;
+// 	const curve = 0.5;
+// 	const colorInside = new THREE.Color("#ff6030");
+// 	const colorOutside = new THREE.Color("#1b3984");
+
+// 	for (let i = 0; i < count; i++) {
+// 		const j = i * 3;
+// 		const radius = Math.random() * 10;
+// 		const brancAngle = ((i % numberOfBranches) / numberOfBranches) * Math.PI * 2;
+// 		const randomX = Math.pow(Math.random(), 4) * (Math.random() > 0.5 ? 1 : -1) * 0.9;
+// 		const randomY = Math.pow(Math.random(), 4) * (Math.random() > 0.5 ? 1 : -1) * 0.9;
+// 		const randomZ = Math.pow(Math.random(), 4) * (Math.random() > 0.5 ? 1 : -1) * 0.9;
+// 		const curveAngle = radius * curve;
+// 		positionArr[j] = Math.sin(brancAngle + curveAngle) * radius + randomX;
+// 		positionArr[j + 1] = 2 + randomY;
+// 		positionArr[j + 2] = Math.cos(brancAngle + curveAngle) * radius + randomZ;
+
+// 		// color
+// 		const mixedValue = colorInside.clone();
+// 		mixedValue.lerp(colorOutside, radius / 10);
+// 		colorArr[j] = mixedValue.r;
+// 		colorArr[j + 1] = mixedValue.g;
+// 		colorArr[j + 2] = mixedValue.b;
+// 	}
+// 	const positionAttribute = new THREE.BufferAttribute(positionArr, 3);
+// 	pointsGeometry = new THREE.BufferGeometry();
+
+// 	const colorsAttribute = new THREE.BufferAttribute(colorArr, 3);
+// 	pointsGeometry.setAttribute("position", positionAttribute);
+// 	pointsGeometry.setAttribute("color", colorsAttribute);
+// 	pointsMaterial = new THREE.PointsMaterial({
+// 		// color: "#ff5588",
+// 		sizeAttenuation: true,
+// 		blending: THREE.AdditiveBlending,
+// 		size: 0.09,
+// 		vertexColors: true,
+// 	});
+// 	points = new THREE.Points(pointsGeometry, pointsMaterial);
+// 	scene.add(points);
+// };
+
+// galaxyGenerator();
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.set(0, 1, 5);
+
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Importing models + raycaster
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const cursor = new THREE.Vector2();
+// document.addEventListener("mousemove", (e) => {
+// 	cursor.x = (e.clientX / sizes.width) * 2 - 1;
+// 	cursor.y = -((e.clientY / sizes.height) * 2 - 1);
+// });
+
+// document.addEventListener("click", (e) => {
+// 	const raycaster = new THREE.Raycaster();
+// 	raycaster.setFromCamera(cursor, camera);
+// 	const intersect = raycaster.intersectObjects(rayCastObjects);
+// 	console.log("inter", intersect);
+
+// 	if (intersect.length > 0) {
+// 		console.log("hi", intersect[0].object.material.color);
+// 		intersect[0].object.material.color = new THREE.Color("blue");
+// 	}
+// });
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const scene = new THREE.Scene();
+
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+// plane.rotation.x = -Math.PI * 0.5;
+// // scene.add(plane);
+
+// const sphere1 = new THREE.Mesh(
+// 	new THREE.SphereGeometry(0.5),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#fa3ccc",
+// 	})
+// );
+// const sphere2 = new THREE.Mesh(
+// 	new THREE.SphereGeometry(0.5),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#fa3ccc",
+// 	})
+// );
+// const sphere3 = new THREE.Mesh(
+// 	new THREE.SphereGeometry(0.5),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#fa3ccc",
+// 	})
+// );
+// sphere1.position.set(-2, 1, 0);
+// sphere2.position.set(0, 1, 0);
+// sphere3.position.set(2, 1, 0);
+// scene.add(sphere1, sphere2, sphere3);
+
+// /* raycasting */
+
+// // const raycaster = new THREE.Raycaster();
+// // const origin = new THREE.Vector3(-3, 1, 0);
+// // const direction = new THREE.Vector3(2, 0, 0);
+// // direction.normalize();
+// // raycaster.set(origin, direction);
+
+// const raycaster = new THREE.Raycaster();
+// const rayCastObjects = [sphere1, sphere2, sphere3];
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.set(0, 1, 5);
+
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+// const timer = new Timer();
+// let isIntersected = false;
+// const tick = () => {
+// 	const deltaTime = timer.getDelta();
+// 	sphere1.position.y = Math.sin(timer._elapsed * 0.002);
+// 	sphere2.position.y = Math.cos(timer._elapsed * 0.0022);
+// 	sphere3.position.y = Math.sin(timer._elapsed * 0.0032);
+
+// 	// Objects to test
+
+// 	// const intersectedObj = raycaster.intersectObjects(rayCastObjects);
+// 	// rayCastObjects.forEach((el) => {
+// 	// 	el.material.color = new THREE.Color("#fa3ccc");
+// 	// });
+// 	// intersectedObj.forEach((el) => {
+// 	// 	el.object.material.color = new THREE.Color("red");
+// 	// });
+
+// 	raycaster.setFromCamera(cursor, camera);
+// 	const intersectedObj = raycaster.intersectObjects(rayCastObjects);
+
+// 	// rayCastObjects.forEach((el) => {
+// 	// 	el.material.color = new THREE.Color("#fa3ccc");
+// 	// });
+// 	// intersectedObj.forEach((el) => {
+// 	// 	el.object.material.color = new THREE.Color("red");
+// 	// });
+// 	// if (intersectedObj.length > 0) {
+// 	// 	if (!isIntersected) {
+// 	// 		console.log("enteres");
+// 	// 		isIntersected = true;
+// 	// 	}
+// 	// } else {
+// 	// 	if (isIntersected) {
+// 	// 		console.log("leaves");
+// 	// 		isIntersected = false;
+// 	// 	}
+// 	// }
+
+// 	// console.log("in", intersectedObj);
+
+// 	timer.update();
+// 	renderer.render(scene, camera);
+// 	controls.update();
+
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+// import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+// import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import { GroundedSkybox } from "three/addons/objects/GroundedSkybox.js";
+// import GUI from "lil-gui";
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const cursor = new THREE.Vector2();
+
+// window.addEventListener("mousemove", (e) => {
+// 	cursor.x = (e.clientX / sizes.width) * 2 - 1;
+// 	cursor.y = -(e.clientY / sizes.height) * 2 + 1;
+// });
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const gui = new GUI();
+
+// const gltfLoader = new GLTFLoader();
+// const dracoLoader = new DRACOLoader();
+// gltfLoader.setDRACOLoader(dracoLoader);
+// dracoLoader.setDecoderPath("./static/draco/");
+// // dracoLoader.decoderPath = "./static/draco/";
+
+// const scene = new THREE.Scene();
+/*  Evironment maps */
+
+// Cube Texture Loader
+// const cubeTextureLoader = new THREE.CubeTextureLoader();
+// const envMap = cubeTextureLoader.load([
+// 	"./static/textures/environmentMap/0/px.png",
+// 	"./static/textures/environmentMap/0/nx.png",
+// 	"./static/textures/environmentMap/0/py.png",
+// 	"./static/textures/environmentMap/0/ny.png",
+// 	"./static/textures/environmentMap/0/pz.png",
+// 	"./static/textures/environmentMap/0/nz.png",
+// ]);
+
+// scene.background = envMap;
+// scene.environment = envMap;
+// scene.environmentIntensity = 1;
+// scene.backgroundIntensity = 1;
+// scene.backgroundBlurriness = 0;
+// scene.environmentRotation.y = 0;
+// scene.backgroundRotation.y = 0;
+// rgbe loader
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("./static/textures/environmentMap/lights.hdr", (environmentMap) => {
+// 	environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+// 	scene.background = environmentMap;
+// 	scene.environment = environmentMap;
+// });
+
+// practice again
+
+// const cubeTextureLoader = new THREE.CubeTextureLoader();
+// const env = cubeTextureLoader.load([
+// 	"./static/textures/environmentMap/2/px.png",
+// 	"./static/textures/environmentMap/2/nx.png",
+// 	"./static/textures/environmentMap/2/py.png",
+// 	"./static/textures/environmentMap/2/ny.png",
+// 	"./static/textures/environmentMap/2/pz.png",
+// 	"./static/textures/environmentMap/2/nz.png",
+// ]);
+// scene.background = env;
+// scene.environment = env;
+
+// Grounded skybox map
+
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("./static/textures/environmentMap/2/2k.hdr", (env) => {
+// 	const skybox = new GroundedSkybox(env, 15, 70);
+// 	console.log("slhy;", skybox);
+// 	// skybox.material.wireframe = true;
+// 	skybox.position.y = 15 - 0.001;
+// 	scene.add(skybox);
+// 	env.mapping = THREE.EquirectangularReflectionMapping;
+// 	// scene.background = env;
+// 	scene.environment = env;
+// });
+
+/* REal time environment map  */
+
+// const textureLoader = new THREE.TextureLoader();
+// const env = textureLoader.load(
+// 	"./static/textures/environmentMap/blockadesLabsSkybox/interior_views_cozy_wood_cabin_with_cauldron_and_p.jpg"
+// );
+// env.mapping = THREE.EquirectangularReflectionMapping;
+// env.colorSpace = THREE.SRGBColorSpace;
+// scene.background = env;
+// scene.environment = env;
+
+// gui.add(scene, "environmentIntensity").min(0).max(10).step(0.001);
+// gui.add(scene, "backgroundIntensity").min(0).max(10).step(0.001);
+// gui.add(scene, "backgroundBlurriness").min(0).max(1).step(0.001);
+// gui.add(scene.environmentRotation, "y")
+// 	.min(0)
+// 	.max(Math.PI * 2)
+// 	.step(0.001)
+// 	.name("environmentRotation");
+// gui.add(scene.backgroundRotation, "y")
+// 	.min(0)
+// 	.max(Math.PI * 2)
+// 	.step(0.001)
+// 	.name("backgroundRotation");
+
+// const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
+// 	type: THREE.HalfFloatType,
+// });
+// scene.environment = cubeRenderTarget.texture;
+
+// const cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget);
+// cubeCamera.layers.set(1);
+
+// // gltfLoader.load("./static/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
+// // 	// gltf.scene.scale.set(0.2, 0.2, 0.2);
+// // 	gltf.scene.traverse(function (object) {
+// // 		object.layers.enable(1);
+// // 	});
+// // 	console.log("gl", gltf);
+// // 	scene.add(gltf.scene);
+// // });
+
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "red",
+// 	})
+// );
+
+// plane.rotation.x = -Math.PI * 0.5;
+
+// // scene.add(plane);
+
+// const sphere = new THREE.Mesh(
+// 	new THREE.SphereGeometry(0.2),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ff6030",
+// 	})
+// );
+// sphere.position.set(0, 2, 0);
+
+// // scene.add(sphere);
+
+// const torusKnot = new THREE.Mesh(
+// 	new THREE.TorusKnotGeometry(0.8, 0.4),
+// 	new THREE.MeshStandardMaterial({
+// 		metalness: 1,
+// 		roughness: 0,
+// 	})
+// );
+// torusKnot.position.x = -3;
+// torusKnot.layers.enable(1);
+// scene.add(torusKnot);
+
+// const sphereTwo = new THREE.Mesh(
+// 	new THREE.SphereGeometry(1),
+// 	new THREE.MeshStandardMaterial({
+// 		metalness: 1,
+// 		roughness: 0,
+// 	})
+// );
+
+// sphereTwo.position.x = 3;
+// scene.add(sphereTwo);
+// // Raycaster
+
+// const raycaster = new THREE.Raycaster();
+
+// const galaxyGenerator = () => {
+// 	const count = 23000;
+// 	const positionArr = new Float32Array(count * 3);
+// 	const colorArr = new Float32Array(count * 3);
+// 	const radiusParameter = 3;
+// 	const galaxyCountParameter = 3;
+// 	const curveParameter = 1.5;
+// 	const randomParameter = 0.3;
+// 	const innerColor = new THREE.Color("#ff6030");
+// 	const outerColor = new THREE.Color("#1b3984");
+
+// 	for (let i = 0; i < count; i++) {
+// 		const j = i * 3;
+// 		const branchAngle = ((i % galaxyCountParameter) / galaxyCountParameter) * Math.PI * 2;
+// 		const radius = Math.random() * radiusParameter;
+// 		const curveLimit = radius * curveParameter;
+// 		const randomX = Math.pow(Math.random(), 6) * (Math.random() > 0.5 ? 1 : -1) * randomParameter;
+// 		const randomY = Math.pow(Math.random(), 6) * (Math.random() > 0.5 ? 1 : -1) * randomParameter;
+// 		const randomZ = Math.pow(Math.random(), 6) * (Math.random() > 0.5 ? 1 : -1) * randomParameter;
+// 		positionArr[j + 0] = Math.sin(branchAngle + curveLimit) * radius + randomX;
+// 		positionArr[j + 1] = 3 + randomY;
+// 		positionArr[j + 2] = Math.cos(branchAngle + curveLimit) * radius + randomZ;
+// 		let mixedColor = innerColor.clone();
+// 		mixedColor = mixedColor.lerp(outerColor, radius / radiusParameter);
+// 		colorArr[j + 0] = mixedColor.r;
+// 		colorArr[j + 1] = mixedColor.g;
+// 		colorArr[j + 2] = mixedColor.b;
+// 	}
+// 	const positionAttribute = new THREE.BufferAttribute(positionArr, 3);
+// 	const colorAttribute = new THREE.BufferAttribute(colorArr, 3);
+// 	const geometry = new THREE.BufferGeometry();
+// 	geometry.setAttribute("position", positionAttribute);
+// 	geometry.setAttribute("color", colorAttribute);
+// 	const material = new THREE.PointsMaterial({
+// 		color: "yellow",
+// 		sizeAttenuation: true,
+// 		blending: THREE.AdditiveBlending,
+// 		size: 0.05,
+// 		vertexColors: true,
+// 	});
+// 	const points = new THREE.Points(geometry, material);
+// 	scene.add(points);
+// };
+
+// // galaxyGenerator();
+
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// // scene.add(ambientLight);
+
+// const pointLight = new THREE.PointLight("#fff", 1);
+// pointLight.position.y = 1;
+// pointLight.position.x = 0.4;
+// const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.5);
+// // scene.add(pointLightHelper);
+
+// // scene.add(pointLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+// camera.position.z = 6;
+// camera.position.y = 2;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const timer = new Timer();
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	// sphere.position.y = 2 - Math.sin(timer._elapsed * 0.002);
+// 	// raycaster.setFromCamera(cursor, camera);
+// 	// const intersects = raycaster.intersectObject(sphere);
+
+// 	// sphere.material.color = new THREE.Color("#ff6030");
+// 	cubeCamera.update(renderer, scene);
+
+// 	// if (intersects.length > 0) {
+// 	// 	intersects[0].object.material.color = new THREE.Color("#1b3984");
+// 	// }
+// 	timer.update();
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+// tick();
+
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+// import { GroundedSkybox } from "three/addons/objects/GroundedSkybox.js";
+
+// const canvas = document.querySelector("canvas.webgl");
+
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
+
+// const scene = new THREE.Scene();
+
+// /* Environment map */
+// const rgbeLoader = new RGBELoader();
+// rgbeLoader.load("./static/textures/environmentMap/0/2k.hdr", (env) => {
+// 	env.mapping = THREE.EquirectangularReflectionMapping;
+// 	const skybox = new GroundedSkybox(env, 15, 70);
+// 	skybox.position.y = 15;
+// 	// scene.add(skybox);
+// 	scene.background = env;
+// 	// scene.environment = env;
+// });
+
+// const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
+// 	type: THREE.HalfFloatType,
+// });
+// const cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget);
+// console.log("cu", cubeCamera);
+// // cubeCamera.layers.set(1);
+// scene.environment = cubeRenderTarget.texture;
+
+// const sphere = new THREE.Mesh(
+// 	new THREE.SphereGeometry(1),
+// 	new THREE.MeshStandardMaterial({
+// 		metalness: 1,
+// 		color: "blue",
+// 		roughness: 0,
+// 	})
+// );
+// sphere.position.y = 1;
+// scene.add(sphere);
+
+// // const torusKnot = new THREE.Mesh(
+// // 	new THREE.TorusKnotGeometry(1, 0.24),
+// // 	new THREE.MeshStandardMaterial({
+// // 		metalness: 1,
+// // 		roughness: 0,
+// // 	})
+// // );
+
+// // torusKnot.position.x = -3;
+// // torusKnot.position.y = 1.7;
+// // scene.add(torusKnot);
+
+// const sphere2 = new THREE.Mesh(
+// 	new THREE.SphereGeometry(2),
+// 	new THREE.MeshStandardMaterial({
+// 		metalness: 1,
+// 		color: "red",
+// 		roughness: 0,
+// 	})
+// );
+// sphere2.position.x = 4;
+// scene.add(sphere2);
+
+// // const ambientLight = new THREE.AmbientLight("#fff", 1);
+// // scene.add(ambientLight);
+
+// // const directionalLight = new THREE.DirectionalLight("#fff", 1);
+// // directionalLight.position.set(0, 3, 0);
+// // scene.add(directionalLight);
+
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+// camera.position.z = 5;
+// scene.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
+
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
+
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	cubeCamera.update(renderer, scene);
+// 	controls.update();
+// 	window.requestAnimationFrame(tick);
+// };
+
+// tick();
+
+// Physics
+
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { Timer } from "three/addons/misc/Timer.js";
+import * as CANNON from "cannon";
+
+const canvas = document.querySelector("canvas.webgl");
+
+const sizes = {
+	width: window.innerWidth,
+	height: window.innerHeight,
 };
 
-galaxyGenerater();
+const objectsToUpdate = [];
 
-/* 
-	GALAXY EMDS
-*/
+const world = new CANNON.World();
+world.gravity.set(0, -9.8, 0);
 
-/* 
-	LIGHTS STARTS
-*/
+const plasticMaterial = new CANNON.Material("plastic");
+const concreteMaterial = new CANNON.Material("concrete");
 
-const ambientLight = new THREE.AmbientLight("#86cdff", 0.275);
-const directionalLight = new THREE.DirectionalLight("#86cdff", 1);
-directionalLight.position.x = 3;
-directionalLight.position.y = 2;
-directionalLight.position.z = -8;
-scene.add(ambientLight, directionalLight);
+const plasticConcreteContactMaterial = new CANNON.ContactMaterial(plasticMaterial, concreteMaterial, {
+	restitution: 0.7,
+});
+world.addContactMaterial(plasticConcreteContactMaterial);
 
-const pointLight = new THREE.PointLight("yellow", 2);
-pointLight.position.z = 1.2;
-pointLight.position.y = 2;
-scene.add(pointLight);
+const scene = new THREE.Scene();
 
-// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
-// scene.add(directionalLightHelper);
+const plane = new THREE.Mesh(
+	new THREE.PlaneGeometry(4, 4),
+	new THREE.MeshStandardMaterial({
+		color: "#ccc",
+	})
+);
+plane.rotation.x = -Math.PI * 0.5;
+scene.add(plane);
 
-/* 
-	LIGHTS ENDS	
-*/
+const planeShape = new CANNON.Plane();
+const planeBody = new CANNON.Body({
+	mass: 0,
+	position: plane.position,
+	shape: planeShape,
+	material: concreteMaterial,
+});
+planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+world.addBody(planeBody);
 
-/* 
-	SHADOW STARTS	
-*/
-directionalLight.castShadow = true;
+// const sphere = new THREE.Mesh(
+// 	new THREE.SphereGeometry(0.5),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "red",
+// 	})
+// );
+// sphere.position.y = 2;
 
-roof.castShadow = true;
-walls.castShadow = true;
-walls.receiveShadow = true;
-floor.receiveShadow = true;
-for (const grave of graves.children) {
-	grave.castShadow = true;
-	grave.receiveShadow = true;
-}
+// scene.add(sphere);
 
-directionalLight.shadow.mapSize.width = 1024;
-directionalLight.shadow.mapSize.height = 1024;
+const createSphere = (radius, position) => {
+	// create physics
+	const shape = new CANNON.Sphere(radius);
+	const body = new CANNON.Body({
+		mass: 1,
+		position,
+		shape: shape,
+		material: plasticMaterial,
+	});
+	world.addBody(body);
+	// create mesh;
+	const mesh = new THREE.Mesh(
+		new THREE.SphereGeometry(0.5),
+		new THREE.MeshStandardMaterial({
+			color: "red",
+		})
+	);
+	mesh.position.copy(body.position);
+	scene.add(mesh);
+	objectsToUpdate.push({
+		body,
+		mesh,
+	});
+};
 
-directionalLight.shadow.camera.near = 1;
-directionalLight.shadow.camera.far = 15;
+createSphere(0.5, { x: 0, y: 2, z: 0 });
 
-// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-// scene.add(directionalLightCameraHelper);
-// console.log("di", directionalLight);
+const ambientLight = new THREE.AmbientLight("#fff", 1);
+scene.add(ambientLight);
 
-/* 
-	SHADOW ENDS	
-*/
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+camera.position.z = 5;
+camera.position.y = 1;
+scene.add(camera);
 
 const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
 controls.update();
 
 const renderer = new THREE.WebGLRenderer({
 	canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.render(scene, camera);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+const timer = new Timer();
 
 const tick = () => {
 	renderer.render(scene, camera);
-	controls.enableDamping = true;
+	const deltaTime = timer.getDelta();
+	world.step(1 / 60, deltaTime, 3);
+	for (let i = 0; i < objectsToUpdate.length; i++) {
+		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
+	}
 	controls.update();
+	timer.update();
 	window.requestAnimationFrame(tick);
 };
 
