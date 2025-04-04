@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Coordinate Grid</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 20px;
+				display: flex;
+				flex-direction: column;
+				height: 98vh;
+				overflow: hidden;
+			}
+			.container {
+				display: flex;
+				height: 100%;
+				gap: 20px;
+			}
+			.grid-container {
+				display: grid;
+				grid-template-columns: repeat(11, 1fr);
+				grid-template-rows: repeat(11, 1fr);
+				border: 2px solid #333;
+				flex-grow: 1;
+				min-width: 0;
+			}
+			.grid-cell {
+				border: 1px solid #aaa;
+				font-size: 12px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				padding: 2px;
+				box-sizing: border-box;
+				background-color: #f8f8f8;
+				overflow: hidden;
+				transition: background-color 0.2s;
+			}
+			.cell-x,
+			.cell-y,
+			.cell-val {
+				font-family: monospace;
+				white-space: nowrap;
+				width: 100%;
+				text-align: center;
+			}
+			.cell-val {
+				font-weight: bold;
+				color: #0066cc;
+			}
+			.control-panel {
+				width: 300px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				padding: 15px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				background-color: #f5f5f5;
+				overflow-y: auto;
+			}
+			select,
+			input,
+			button {
+				padding: 8px;
+				margin: 5px 0;
+				border-radius: 4px;
+				border: 1px solid #ccc;
+			}
+			input:focus,
+			select:focus {
+				outline: none;
+				border-color: #0066cc;
+				box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+			}
+			button {
+				background-color: #0066cc;
+				color: white;
+				border: none;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
+			button:hover {
+				background-color: #0052a3;
+			}
+			label {
+				font-weight: bold;
+				display: block;
+				margin-bottom: 5px;
+			}
+			h1 {
+				margin-top: 0;
+				margin-bottom: 20px;
+				color: #333;
+				font-size: 24px;
+			}
+			h3,
+			h4 {
+				margin-top: 15px;
+				margin-bottom: 10px;
+				color: #333;
+			}
+			.functions-list {
+				font-size: 12px;
+				margin-top: 10px;
+				background-color: #e9e9e9;
+				padding: 10px;
+				border-radius: 4px;
+				max-height: 150px;
+				overflow-y: auto;
+			}
+			.functions-list code {
+				font-family: monospace;
+				background-color: #f0f0f0;
+				padding: 2px 4px;
+				border-radius: 3px;
+			}
+			.checkbox-group {
+				display: flex;
+				align-items: center;
+				margin: 10px 0;
+			}
+			.checkbox-group input[type="checkbox"] {
+				margin-right: 10px;
+			}
+			.color-preview {
+				width: 20px;
+				height: 20px;
+				border: 1px solid #ccc;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 5px;
+			}
+			.color-inputs {
+				display: flex;
+				gap: 10px;
+				align-items: center;
+				margin-top: 10px;
+			}
+			.color-channel {
+				flex: 1;
+			}
+			.color-channel label {
+				display: flex;
+				align-items: center;
+				color: #333;
+			}
+			.color-icon {
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				margin-right: 5px;
+				display: inline-block;
+			}
+			.red-icon {
+				background-color: #ff0000;
+			}
+			.green-icon {
+				background-color: #00ff00;
+			}
+			.blue-icon {
+				background-color: #0000ff;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Interactive Coordinate Grid</h1>
+		<div class="container">
+			<div class="control-panel">
+				<h3>Grid Configuration</h3>
+
+				<div class="checkbox-group">
+					<input type="checkbox" id="color-mode" name="color-mode" />
+					<label for="color-mode">RGB Color Mode</label>
+					<div id="color-preview" class="color-preview"></div>
+				</div>
+
+				<div id="value-inputs">
+					<label for="value-type">Cell Value:</label>
+					<select id="value-type">
+						<option value="grid.x">X coordinate</option>
+						<option value="grid.y">Y coordinate</option>
+						<option value="grid.x * grid.y">X * Y</option>
+						<option value="Math.sqrt(grid.x * grid.x + grid.y * grid.y)">Distance from (0,0)</option>
+						<option value="Math.sin(grid.x * Math.PI * 2)">sin(x * 2π)</option>
+						<option value="Math.cos(grid.y * Math.PI * 2)">cos(y * 2π)</option>
+						<option value="custom">Custom Formula</option>
+					</select>
+
+					<div id="custom-formula-group" style="display: none">
+						<label for="custom-formula">Custom Formula:</label>
+						<input
+							type="text"
+							id="custom-formula"
+							placeholder="Example: Math.sin(grid.x) * grid.y"
+							value=""
+						/>
+					</div>
+				</div>
+
+				<div id="color-inputs" style="display: none">
+					<h4>RGB Color Channels</h4>
+					<div class="color-channel">
+						<label><span class="color-icon red-icon"></span> Red:</label>
+						<input
+							type="text"
+							id="red-formula"
+							placeholder="Math.sin(grid.x * Math.PI * 2)"
+							value="grid.x"
+						/>
+					</div>
+					<div class="color-channel">
+						<label><span class="color-icon green-icon"></span> Green:</label>
+						<input
+							type="text"
+							id="green-formula"
+							placeholder="Math.sin(grid.y * Math.PI * 2)"
+							value="grid.y"
+						/>
+					</div>
+					<div class="color-channel">
+						<label><span class="color-icon blue-icon"></span> Blue:</label>
+						<input
+							type="text"
+							id="blue-formula"
+							placeholder="Math.sin((grid.x + grid.y) * Math.PI)"
+							value="0.5"
+						/>
+					</div>
+				</div>
+
+				<h4>Coordinate Transformation</h4>
+				<label for="x-transform">X Transformation:</label>
+				<input type="text" id="x-transform" placeholder="Example: grid.x" value="grid.x" />
+
+				<label for="y-transform">Y Transformation:</label>
+				<input type="text" id="y-transform" placeholder="Example: grid.y" value="grid.y" />
+
+				<div style="display: flex; gap: 10px; margin-top: 10px">
+					<button id="apply-button" style="flex: 1">Apply</button>
+					<button id="reset-button" style="flex: 1">Reset</button>
+				</div>
+
+				<h4>Available Math Functions</h4>
+				<div class="functions-list">
+					<p>
+						<strong>Basic:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>,
+						<code>%</code> (mod)
+					</p>
+					<p>
+						<strong>Math:</strong> <code>Math.sin()</code>, <code>Math.cos()</code>,
+						<code>Math.tan()</code>, <code>Math.atan()</code>, <code>Math.atan2()</code>,
+						<code>Math.pow()</code>, <code>Math.sqrt()</code>, <code>Math.abs()</code>,
+						<code>Math.min()</code>, <code>Math.max()</code>, <code>Math.floor()</code>,
+						<code>Math.ceil()</code>, <code>Math.round()</code>
+					</p>
+					<p><strong>Constants:</strong> <code>Math.PI</code>, <code>Math.E</code></p>
+					<p>
+						<strong>GLSL-like:</strong> <code>Math.abs()</code> (abs), <code>Math.acos()</code> (acos),
+						<code>%</code> (mod), <code>Math.clamp(v, min, max)</code>, <code>Math.fract(x)</code>,
+						<code>Math.mix(a, b, t)</code>
+					</p>
+				</div>
+
+				<div style="margin-top: 15px">
+					<h4>Example Color Patterns</h4>
+					<ul style="font-size: 12px; padding-left: 20px">
+						<li>
+							RGB gradient: R: <code>grid.x</code>, G: <code>grid.y</code>, B:
+							<code>grid.x * grid.y</code>
+						</li>
+						<li>
+							Rainbow: R: <code>Math.sin(grid.x * Math.PI * 2)</code>, G:
+							<code>Math.sin(grid.y * Math.PI * 2)</code>, B:
+							<code>Math.sin((grid.x + grid.y) * Math.PI)</code>
+						</li>
+						<li>
+							Checkerboard: R/G/B: <code>(Math.floor(grid.x * 10) + Math.floor(grid.y * 10)) % 2</code>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="grid-container" class="grid-container"></div>
+		</div>
+
+		<script>
+			// Add GLSL-like functions to Math for convenience
+			Math.clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+			Math.fract = (x) => x - Math.floor(x);
+			Math.mix = (a, b, t) => a * (1 - t) + b * t;
+			Math.mod = (x, y) => ((x % y) + y) % y; // Proper modulo that works with negative numbers
+			Math.step = (edge, x) => (x < edge ? 0 : 1);
+			Math.smoothstep = (edge0, edge1, x) => {
+				const t = Math.clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+				return t * t * (3 - 2 * t);
+			};
+
+			// Grid creation and update logic
+			const gridSize = 11; // 0.0 to 1.0 in 0.1 increments
+			const gridContainer = document.getElementById("grid-container");
+			const valueTypeSelect = document.getElementById("value-type");
+			const customFormulaGroup = document.getElementById("custom-formula-group");
+			const customFormulaInput = document.getElementById("custom-formula");
+			const xTransformInput = document.getElementById("x-transform");
+			const yTransformInput = document.getElementById("y-transform");
+			const applyButton = document.getElementById("apply-button");
+			const resetButton = document.getElementById("reset-button");
+			const colorModeCheckbox = document.getElementById("color-mode");
+			const colorPreview = document.getElementById("color-preview");
+			const valueInputs = document.getElementById("value-inputs");
+			const colorInputs = document.getElementById("color-inputs");
+			const redFormulaInput = document.getElementById("red-formula");
+			const greenFormulaInput = document.getElementById("green-formula");
+			const blueFormulaInput = document.getElementById("blue-formula");
+
+			// Variables to store grid cells for easy updating
+			const gridCells = [];
+
+			// Initialize the grid
+			function createGrid() {
+				gridContainer.innerHTML = "";
+				gridCells.length = 0;
+
+				for (let row = 0; row < gridSize; row++) {
+					const y = (gridSize - 1 - row) / 10; // 1.0 at top, 0.0 at bottom, in 0.1 increments
+
+					for (let col = 0; col < gridSize; col++) {
+						const x = col / 10; // 0.0 at left, 1.0 at right, in 0.1 increments
+
+						const cell = document.createElement("div");
+						cell.className = "grid-cell";
+
+						// Create separate elements for x, y, and val
+						const xSpan = document.createElement("div");
+						xSpan.className = "cell-x";
+
+						const ySpan = document.createElement("div");
+						ySpan.className = "cell-y";
+
+						const valSpan = document.createElement("div");
+						valSpan.className = "cell-val";
+
+						cell.appendChild(xSpan);
+						cell.appendChild(ySpan);
+						cell.appendChild(valSpan);
+
+						// Store the original grid coordinates
+						const gridData = {
+							element: cell,
+							xElement: xSpan,
+							yElement: ySpan,
+							valElement: valSpan,
+							origX: x,
+							origY: y,
+							x: x,
+							y: y,
+						};
+
+						gridCells.push(gridData);
+						gridContainer.appendChild(cell);
+					}
+				}
+
+				updateGrid();
+			}
+
+			// Create a safe evaluation function
+			function safeEval(formula, grid) {
+				try {
+					// Create a function from the formula with grid as parameter
+					return new Function("grid", "Math", `return ${formula};`)(grid, Math);
+				} catch (error) {
+					console.error(`Error evaluating formula "${formula}":`, error);
+					return "Error";
+				}
+			}
+
+			// Format number for display
+			function formatNumber(num) {
+				if (typeof num !== "number") return num;
+
+				// If number is close to an integer, display fewer decimals
+				if (Math.abs(num - Math.round(num)) < 0.0001) {
+					return num.toFixed(1);
+				}
+
+				// Determine precision based on magnitude
+				if (Math.abs(num) < 0.01) return num.toFixed(4);
+				if (Math.abs(num) < 0.1) return num.toFixed(3);
+				if (Math.abs(num) < 10) return num.toFixed(2);
+				return num.toFixed(1);
+			}
+
+			// Convert value to RGB component (0-255)
+			function normalizeToRGB(value) {
+				if (typeof value !== "number") return 0;
+				// Clamp to 0-1 range then scale to 0-255
+				return Math.floor(Math.clamp(value, 0, 1) * 255);
+			}
+
+			// Update the color preview
+			function updateColorPreview() {
+				if (!colorModeCheckbox.checked) return;
+
+				const dummyGrid = { x: 0.5, y: 0.5 };
+				const r = normalizeToRGB(safeEval(redFormulaInput.value, dummyGrid));
+				const g = normalizeToRGB(safeEval(greenFormulaInput.value, dummyGrid));
+				const b = normalizeToRGB(safeEval(blueFormulaInput.value, dummyGrid));
+
+				colorPreview.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+			}
+
+			// Get color for value (for normal mode)
+			function getColorForValue(value) {
+				if (typeof value !== "number") return "#f8f8f8";
+
+				// Normalize value to 0-1 range for coloring
+				const normalizedValue = Math.clamp((value + 1) / 2, 0, 1);
+
+				// Generate a blue gradient
+				const r = Math.floor(220 * (1 - normalizedValue));
+				const g = Math.floor(220 * (1 - normalizedValue) + 20 * normalizedValue);
+				const b = Math.floor(220 * (1 - normalizedValue) + 35 + 220 * normalizedValue);
+
+				return `rgb(${r}, ${g}, ${b})`;
+			}
+
+			// Update the grid based on current settings
+			function updateGrid() {
+				// Get transformation functions
+				const xTransformText = xTransformInput.value || "grid.x";
+				const yTransformText = yTransformInput.value || "grid.y";
+
+				// Get value calculation function
+				let valueText = valueTypeSelect.value;
+				if (valueText === "custom") {
+					valueText = customFormulaInput.value || "grid.x";
+				}
+
+				// Check if in color mode
+				const isColorMode = colorModeCheckbox.checked;
+
+				// Apply transformations to each cell
+				gridCells.forEach((grid) => {
+					// Set up the grid object with original coordinates
+					grid.x = grid.origX;
+					grid.y = grid.origY;
+
+					try {
+						// Apply coordinate transformations
+						const transformedX = safeEval(xTransformText, grid);
+						const transformedY = safeEval(yTransformText, grid);
+
+						// Calculate the cell value
+						grid.x = transformedX;
+						grid.y = transformedY;
+
+						if (isColorMode) {
+							// RGB color mode
+							const r = normalizeToRGB(safeEval(redFormulaInput.value, grid));
+							const g = normalizeToRGB(safeEval(greenFormulaInput.value, grid));
+							const b = normalizeToRGB(safeEval(blueFormulaInput.value, grid));
+
+							// Hide text content in color mode
+							grid.xElement.style.display = "none";
+							grid.yElement.style.display = "none";
+							grid.valElement.style.display = "none";
+
+							// Set background color from RGB components
+							grid.element.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+							grid.element.style.color = "#000";
+						} else {
+							// Normal value mode
+							const value = safeEval(valueText, grid);
+
+							// Show text content
+							grid.xElement.style.display = "block";
+							grid.yElement.style.display = "block";
+							grid.valElement.style.display = "block";
+
+							// Update the cell content
+							grid.xElement.textContent = `x: ${formatNumber(transformedX)}`;
+							grid.yElement.textContent = `y: ${formatNumber(transformedY)}`;
+							grid.valElement.textContent = `val: ${formatNumber(value)}`;
+
+							// Reset to default styling
+							grid.element.style.backgroundColor = "";
+							grid.element.style.color = "#000";
+						}
+					} catch (error) {
+						grid.element.style.backgroundColor = "#ffdddd";
+
+						if (!isColorMode) {
+							grid.xElement.textContent = "Error";
+							grid.yElement.textContent = "";
+							grid.valElement.textContent = "";
+							grid.xElement.style.display = "block";
+							grid.yElement.style.display = "block";
+							grid.valElement.style.display = "block";
+						} else {
+							grid.xElement.style.display = "none";
+							grid.yElement.style.display = "none";
+							grid.valElement.style.display = "none";
+						}
+					}
+				});
+
+				// Update color preview
+				updateColorPreview();
+			}
+
+			// Event listeners
+			valueTypeSelect.addEventListener("change", function () {
+				customFormulaGroup.style.display = this.value === "custom" ? "block" : "none";
+			});
+
+			colorModeCheckbox.addEventListener("change", function () {
+				valueInputs.style.display = this.checked ? "none" : "block";
+				colorInputs.style.display = this.checked ? "block" : "none";
+				updateGrid();
+			});
+
+			applyButton.addEventListener("click", updateGrid);
+
+			resetButton.addEventListener("click", function () {
+				xTransformInput.value = "grid.x";
+				yTransformInput.value = "grid.y";
+				valueTypeSelect.value = "grid.x";
+				customFormulaInput.value = "";
+				customFormulaGroup.style.display = "none";
+				colorModeCheckbox.checked = false;
+				redFormulaInput.value = "grid.x";
+				greenFormulaInput.value = "grid.y";
+				blueFormulaInput.value = "0.5";
+				valueInputs.style.display = "block";
+				colorInputs.style.display = "none";
+				updateGrid();
+			});
+
+			// Initialize color input listeners
+			[redFormulaInput, greenFormulaInput, blueFormulaInput].forEach((input) => {
+				input.addEventListener("input", updateColorPreview);
+			});
+
+			// Initialize the grid on page load
+			createGrid();
+		</script>
+	</body>
+</html>

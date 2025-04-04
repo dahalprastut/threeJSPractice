@@ -3998,51 +3998,51 @@
 
 // Physics
 
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { Timer } from "three/addons/misc/Timer.js";
-import * as CANNON from "cannon";
+// import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { Timer } from "three/addons/misc/Timer.js";
+// import * as CANNON from "cannon";
 
-const canvas = document.querySelector("canvas.webgl");
+// const canvas = document.querySelector("canvas.webgl");
 
-const sizes = {
-	width: window.innerWidth,
-	height: window.innerHeight,
-};
+// const sizes = {
+// 	width: window.innerWidth,
+// 	height: window.innerHeight,
+// };
 
-const objectsToUpdate = [];
+// const objectsToUpdate = [];
 
-const world = new CANNON.World();
-world.gravity.set(0, -9.8, 0);
+// const world = new CANNON.World();
+// world.gravity.set(0, -9.8, 0);
 
-const plasticMaterial = new CANNON.Material("plastic");
-const concreteMaterial = new CANNON.Material("concrete");
+// const plasticMaterial = new CANNON.Material("plastic");
+// const concreteMaterial = new CANNON.Material("concrete");
 
-const plasticConcreteContactMaterial = new CANNON.ContactMaterial(plasticMaterial, concreteMaterial, {
-	restitution: 0.7,
-});
-world.addContactMaterial(plasticConcreteContactMaterial);
+// const plasticConcreteContactMaterial = new CANNON.ContactMaterial(plasticMaterial, concreteMaterial, {
+// 	restitution: 0.7,
+// });
+// world.addContactMaterial(plasticConcreteContactMaterial);
 
-const scene = new THREE.Scene();
+// const scene = new THREE.Scene();
 
-const plane = new THREE.Mesh(
-	new THREE.PlaneGeometry(4, 4),
-	new THREE.MeshStandardMaterial({
-		color: "#ccc",
-	})
-);
-plane.rotation.x = -Math.PI * 0.5;
-scene.add(plane);
+// const plane = new THREE.Mesh(
+// 	new THREE.PlaneGeometry(4, 4),
+// 	new THREE.MeshStandardMaterial({
+// 		color: "#ccc",
+// 	})
+// );
+// plane.rotation.x = -Math.PI * 0.5;
+// scene.add(plane);
 
-const planeShape = new CANNON.Plane();
-const planeBody = new CANNON.Body({
-	mass: 0,
-	position: plane.position,
-	shape: planeShape,
-	material: concreteMaterial,
-});
-planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
-world.addBody(planeBody);
+// const planeShape = new CANNON.Plane();
+// const planeBody = new CANNON.Body({
+// 	mass: 0,
+// 	position: plane.position,
+// 	shape: planeShape,
+// 	material: concreteMaterial,
+// });
+// planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5);
+// world.addBody(planeBody);
 
 // const sphere = new THREE.Mesh(
 // 	new THREE.SphereGeometry(0.5),
@@ -4054,62 +4054,62 @@ world.addBody(planeBody);
 
 // scene.add(sphere);
 
-const createSphere = (radius, position) => {
-	// create physics
-	const shape = new CANNON.Sphere(radius);
-	const body = new CANNON.Body({
-		mass: 1,
-		position,
-		shape: shape,
-		material: plasticMaterial,
-	});
-	world.addBody(body);
-	// create mesh;
-	const mesh = new THREE.Mesh(
-		new THREE.SphereGeometry(0.5),
-		new THREE.MeshStandardMaterial({
-			color: "red",
-		})
-	);
-	mesh.position.copy(body.position);
-	scene.add(mesh);
-	objectsToUpdate.push({
-		body,
-		mesh,
-	});
-};
+// const createSphere = (radius, position) => {
+// 	// create physics
+// 	const shape = new CANNON.Sphere(radius);
+// 	const body = new CANNON.Body({
+// 		mass: 1,
+// 		position,
+// 		shape: shape,
+// 		material: plasticMaterial,
+// 	});
+// 	world.addBody(body);
+// 	// create mesh;
+// 	const mesh = new THREE.Mesh(
+// 		new THREE.SphereGeometry(0.5),
+// 		new THREE.MeshStandardMaterial({
+// 			color: "red",
+// 		})
+// 	);
+// 	mesh.position.copy(body.position);
+// 	scene.add(mesh);
+// 	objectsToUpdate.push({
+// 		body,
+// 		mesh,
+// 	});
+// };
 
-createSphere(0.5, { x: 0, y: 2, z: 0 });
+// createSphere(0.5, { x: 0, y: 2, z: 0 });
 
-const ambientLight = new THREE.AmbientLight("#fff", 1);
-scene.add(ambientLight);
+// const ambientLight = new THREE.AmbientLight("#fff", 1);
+// scene.add(ambientLight);
 
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.z = 5;
-camera.position.y = 1;
-scene.add(camera);
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+// camera.position.z = 5;
+// camera.position.y = 1;
+// scene.add(camera);
 
-const controls = new OrbitControls(camera, canvas);
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.update();
 
-const renderer = new THREE.WebGLRenderer({
-	canvas,
-});
-renderer.setSize(sizes.width, sizes.height);
-renderer.render(scene, camera);
+// const renderer = new THREE.WebGLRenderer({
+// 	canvas,
+// });
+// renderer.setSize(sizes.width, sizes.height);
+// renderer.render(scene, camera);
 
-const timer = new Timer();
+// const timer = new Timer();
 
-const tick = () => {
-	renderer.render(scene, camera);
-	const deltaTime = timer.getDelta();
-	world.step(1 / 60, deltaTime, 3);
-	for (let i = 0; i < objectsToUpdate.length; i++) {
-		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
-	}
-	controls.update();
-	timer.update();
-	window.requestAnimationFrame(tick);
-};
+// const tick = () => {
+// 	renderer.render(scene, camera);
+// 	const deltaTime = timer.getDelta();
+// 	world.step(1 / 60, deltaTime, 3);
+// 	for (let i = 0; i < objectsToUpdate.length; i++) {
+// 		objectsToUpdate[i].mesh.position.copy(objectsToUpdate[i].body.position);
+// 	}
+// 	controls.update();
+// 	timer.update();
+// 	window.requestAnimationFrame(tick);
+// };
 
-tick();
+// tick();
