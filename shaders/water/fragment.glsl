@@ -38,19 +38,33 @@
 // ==========================================
 
 
+// precision mediump float;
+
+// uniform vec3 uInnerColor;
+// uniform vec3 uOuterColor;
+
+// uniform float uOffsetColor;
+// uniform float uColorMultiplier;
+
+// varying float vElevation;
+
+// void main() {
+//     vec3 mixColor = mix(uOuterColor, uInnerColor, vElevation) + uOffsetColor *uColorMultiplier;
+//     gl_FragColor = vec4(mixColor, 1.0);
+// }
+
+// ====================================================
+
 precision mediump float;
 
-uniform vec3 uInnerColor;
-uniform vec3 uOuterColor;
-
-uniform float uOffsetColor;
+uniform vec3 uColorHigh; 
+uniform vec3 uColorLow; 
 uniform float uColorMultiplier;
+uniform float uColorOffset;
 
 varying float vElevation;
-
 void main() {
-    vec3 mixColor = mix(uOuterColor, uInnerColor, vElevation) + uOffsetColor *uColorMultiplier;
-    gl_FragColor = vec4(mixColor, 1.0);
+    vec3 mixColor = mix(uColorHigh, uColorLow, vElevation * uColorMultiplier + uColorOffset );
+    gl_FragColor = vec4(mixColor,1.0);
+
 }
-
-
